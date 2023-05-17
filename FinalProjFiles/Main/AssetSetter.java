@@ -4,6 +4,9 @@ import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
 import object.OBJ_Key;
+import Main.GamePanel;
+
+
 
 public class AssetSetter {
     
@@ -15,7 +18,9 @@ public class AssetSetter {
 
 
     public void setObject(){
-        gp.obj[0] = new OBJ_Key(gp);
+        switch(GamePanel.currentMap){
+            case 0:
+            gp.obj[0] = new OBJ_Key(gp);
         gp.obj[0].worldX= 23 * gp.tileSize;
         gp.obj[0].worldY = 7 * gp.tileSize;
 
@@ -46,10 +51,13 @@ public class AssetSetter {
 
         gp.obj[7] = new OBJ_Boots(gp);
         gp.obj[7].worldX = 37 * gp.tileSize; //COLUMN THE NUMBER HERE  IS ONE LESS THANT HE LINE OF TEXT ON THE MAP
-        gp.obj[7].worldY = 42*gp.tileSize;   //ROW 
+        gp.obj[7].worldY = 42*gp.tileSize; 
+        break;
 
-        //ADD NEW ELEMENT TO ADD NEW OBJECT 
+        }
 
+
+        
 
 
     }

@@ -2,8 +2,11 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import object.OBJ_Key;
@@ -11,23 +14,39 @@ import object.OBJ_Key;
 public class UI {
     
     GamePanel gp;
-    Font arial_40, arial_80B;
+    Font arial_40, arial_80B, earthbound;
     BufferedImage keyImage;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    private long lastFrameTime;
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     public UI(GamePanel gp){
+
         this.gp = gp;
+        try{
+        InputStream is = getClass().getResourceAsStream("/res/fonts/earthbound.ttf");
+        earthbound = Font.createFont(Font.TRUETYPE_FONT,is );
+        }catch(FontFormatException e){
+            e.printStackTrace();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+
         arial_80B = new Font("Arial", Font.BOLD, 80);//Name of font, type(bold or plain), size of the font
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);//Name of font, type(bold or plain), size of the font
+        
         OBJ_Key key = new OBJ_Key(gp);
         keyImage = key.image;
+        lastFrameTime = System.nanoTime();
         
     }
 
@@ -41,7 +60,7 @@ public class UI {
     public void draw(Graphics2D g2){
         if(gameFinished){
             
-            g2.setFont(arial_40);
+            g2.setFont(arial_80B);
             g2.setColor(Color.white);
 
             String text;
@@ -63,7 +82,7 @@ public class UI {
              y = gp.screenHeight/2 + (gp.tileSize*3);
              g2.drawString(text, x,y);
              
-             g2.setFont(arial_80B);
+             g2.setFont(arial_40);
              g2.setColor(Color.yellow);
              text = "Congratulations!";
              textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth(); //returns length of text
@@ -76,14 +95,18 @@ public class UI {
         }
 
         else {
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
+            g2.setFont(earthbound);
+            g2.setColor(Color.WHITE);
             g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
             g2.drawString("x "+gp.player.hasKey,74,65);
             /*The Y value of the drawString actually indicates the bottom of the text, rather than the top like most objects. */
             
             //TIME
-            playTime += (double)1/60;
+            //playTime += (double)1/60;
+            long currentTime = System.nanoTime();
+            double elapsedTime = (currentTime - lastFrameTime) / 1_000_000_000.0; // Convert to seconds
+            lastFrameTime = currentTime;
+            playTime += elapsedTime;
             g2.drawString("Time:"+dFormat.format(playTime),gp.tileSize*11,65);
 
     

@@ -42,8 +42,18 @@ public class Player extends Entity{
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = gp.tileSize*23; //23 
-        worldY = gp.tileSize*21; // 21
+        switch (GamePanel.currentMap){
+            case 0:
+            worldX = gp.tileSize*23;
+            worldY = gp.tileSize*21;
+            break;
+
+            case 1:
+            worldX = gp.tileSize*12; 
+            worldY = gp.tileSize*13;
+            break;
+
+        }
         tempX = worldX;
         tempY = worldY;
         speed = 7;
