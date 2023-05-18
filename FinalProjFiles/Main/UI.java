@@ -14,13 +14,15 @@ import object.OBJ_Key;
 public class UI {
     
     GamePanel gp;
-    Font arial_40, arial_80B, earthbound;
+    Graphics2D g2;
+    Font arial_40, arial_80B, earthbound,title;
     BufferedImage keyImage;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
     private long lastFrameTime;
+    public int commandNum = 0;
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -31,6 +33,8 @@ public class UI {
         try{
         InputStream is = getClass().getResourceAsStream("/res/fonts/earthbound.ttf");
         earthbound = Font.createFont(Font.TRUETYPE_FONT,is );
+        is = getClass().getResourceAsStream("/res/fonts/Title.ttf");
+        title = Font.createFont(Font.TRUETYPE_FONT,is);
         }catch(FontFormatException e){
             e.printStackTrace();
         }
@@ -58,9 +62,18 @@ public class UI {
     //Don't instantiate the class in the draw method, always do it in the constructor.
     //Doing it in the draw method conusmes time and resources as it is instatiatied 60 times every second.
     public void draw(Graphics2D g2){
+
+        this.g2 = g2;
+
+        //Title state
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen(g2);
+        }
+
+        else{
         if(gameFinished){
             
-            g2.setFont(arial_80B);
+            g2.setFont(earthbound.deriveFont(70F));
             g2.setColor(Color.white);
 
             String text;
@@ -82,12 +95,12 @@ public class UI {
              y = gp.screenHeight/2 + (gp.tileSize*3);
              g2.drawString(text, x,y);
              
-             g2.setFont(arial_40);
+             g2.setFont(earthbound.deriveFont(125F));
              g2.setColor(Color.yellow);
              text = "Congratulations!";
              textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth(); //returns length of text
               x = gp.screenWidth/2-textLength/2;//aligns text in the center
-              y = gp.screenHeight/2 + (gp.tileSize*2);
+              y = gp.screenHeight/2 + (gp.tileSize*2)-100;
               g2.drawString(text, x,y);
 
               gp.gameThread = null;//STOPS THE THREAD/STOPS GAME
@@ -95,7 +108,7 @@ public class UI {
         }
 
         else {
-            g2.setFont(earthbound);
+            g2.setFont(earthbound.deriveFont(55F));
             g2.setColor(Color.WHITE);
             g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
             g2.drawString("x "+gp.player.hasKey,74,65);
@@ -107,7 +120,7 @@ public class UI {
             double elapsedTime = (currentTime - lastFrameTime) / 1_000_000_000.0; // Convert to seconds
             lastFrameTime = currentTime;
             playTime += elapsedTime;
-            g2.drawString("Time:"+dFormat.format(playTime),gp.tileSize*11,65);
+            g2.drawString("Time:"+dFormat.format(playTime),gp.tileSize*14,65);
 
     
             //MESSAGE
@@ -124,6 +137,59 @@ public class UI {
                 }
             }
         }
+    }
         
+    }
+
+    public void drawTitleScreen(Graphics2D g2){
+        
+        g2.setColor(new Color(57,110,173));
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+        
+        //Title name
+        g2.setFont(title.deriveFont(Font.BOLD,96F));
+        String text = "TITLE SCREEN";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize*3;
+
+        //Shadow
+        g2.setColor(Color.black);
+        g2.drawString(text,x+5,y+5);
+
+        //Main color
+        g2.setColor(Color.white);
+        g2.drawString(text,x,y);
+
+        //Menu Buttons
+        g2.setFont(earthbound.deriveFont(Font.BOLD,48F));
+
+        text = "NEW GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*4;
+        g2.drawString(text,x,y);
+        if(commandNum == 0){
+            g2.drawString(">",x-gp.tileSize*1,y);
+        }
+        
+        text = "LOAD GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+        if(commandNum == 1){
+            g2.drawString(">",x-gp.tileSize*1,y);
+        }
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+        if(commandNum == 2){
+            g2.drawString(">",x-gp.tileSize*1,y);
+        }
+    }
+
+    public int getXforCenteredText(String text) {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = gp.screenWidth/2-length/2;
+        return x;
     }
 }

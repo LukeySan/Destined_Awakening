@@ -19,6 +19,7 @@ public class Sound {
         soundURL[2] = getClass().getResource("/res/sound/powerup.wav");
         soundURL[3] = getClass().getResource("/res/sound/unlock.wav");
         soundURL[4] = getClass().getResource("/res/sound/goodFanfare.wav");
+        soundURL[5] = getClass().getResource("/res/sound/mainmenu.wav");
 
     }
 
@@ -34,6 +35,10 @@ public class Sound {
                 gainControl.setValue(-25.0f);
             }
             else if (i == 4){
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-15.0f);
+            }
+            else if (i == 5){
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-15.0f);
             }

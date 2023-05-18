@@ -32,6 +32,12 @@ public class GamePanel extends JPanel implements Runnable{
      public final int maxMap = 10;
      public static int currentMap = 0;
 
+     //GAME STATE
+     public static int gameState;
+     public static int titleState = 0;
+     public static int playState = 1;
+
+
      //FOR FULL SCREEN
      int screenWidth2 = screenWidth;
      int screenHeight2 = screenHeight;
@@ -44,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //SYSTEM
      TileManager tileM = new TileManager(this);
-     KeyHandler keyH = new KeyHandler();
+     KeyHandler keyH = new KeyHandler(this);
      Sound se = new Sound();
      Sound music = new Sound();
      public CollisionChecker cChecker =  new CollisionChecker(this);
@@ -71,10 +77,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
        aSetter.setObject();
+       playMusic(5);
+        gameState = titleState;
 
-        playMusic(0);
-
-        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //Buffered image as large as the game window
+       tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //Buffered image as large as the game window
         g2 = (Graphics2D)tempScreen.getGraphics();
 
         //setFullScreen();
@@ -98,34 +104,34 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread.start(); 
 
     }
+    public void paintComponent(Graphics g){
 
-    
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
 
-    public void drawToScreen(){
-        Graphics g = getGraphics();
+    //DEBUG
+    long  drawStart = 0;
+    if(keyH.checkDrawTime){
+    drawStart = System.nanoTime();
 
-        g.drawImage(tempScreen,0,0,screenWidth2,screenHeight2,null);
-        g.dispose();
+    }
+    //TITLE SCREEN
+    if(gameState == titleState){
+        ui.draw(g2);  
     }
     
-    public void drawToTempScreen(){
-        
-        //DEBUG
-        long  drawStart = 0;
-        if(keyH.checkDrawTime){
-            drawStart = System.nanoTime();
+    
+    //OTHERS
+    else{
+    //TILE
+    tileM.draw(g2); 
 
-        }
-
-        //TILE
-        tileM.draw(g2); 
-
-        //OBJECT
-        for(int i = 0; i <obj.length; i++){
-            if (obj[i] != null){
-                obj[i].draw(g2, this);
+    //OBJECT
+    for(int i = 0; i <obj.length; i++){
+        if (obj[i] != null){
+            obj[i].draw(g2, this);
             }
-        }
+    }
 
         //PLAYER
         player.draw(g2);
@@ -133,7 +139,15 @@ public class GamePanel extends JPanel implements Runnable{
         //UI
         ui.draw(g2);
 
-        //DEBUG
+        
+
+
+        if (g2 != null) {
+            g2.dispose();
+        }
+    }
+
+    //DEBUG
         if(keyH.checkDrawTime == true){
             long drawEnd = System.nanoTime();
             long passed = drawEnd - drawStart;
@@ -142,11 +156,8 @@ public class GamePanel extends JPanel implements Runnable{
             System.out.println("Draw Time: " + passed);
 
         }
-
-        g2.dispose();
         
     }
-
     public void run(){
 
         double drawInterval = 1000000000/FPS;
@@ -207,6 +218,51 @@ public class GamePanel extends JPanel implements Runnable{
         se.setFile(i);
         se.play();
     }
+        /*public void drawToScreen(){
+        Graphics g = getGraphics();
+
+        g.drawImage(tempScreen,0,0,screenWidth2,screenHeight2,null);
+        g.dispose();
+    }
+    
+    public void drawToTempScreen(){
+        
+        //DEBUG
+        long  drawStart = 0;
+        if(keyH.checkDrawTime){
+            drawStart = System.nanoTime();
+
+        }
+
+        //TILE
+        tileM.draw(g2); 
+
+        //OBJECT
+        for(int i = 0; i <obj.length; i++){
+            if (obj[i] != null){
+                obj[i].draw(g2, this);
+            }
+        }
+
+        //PLAYER
+        player.draw(g2);
+
+        //UI
+        ui.draw(g2);
+
+        //DEBUG
+        if(keyH.checkDrawTime == true){
+            long drawEnd = System.nanoTime();
+            long passed = drawEnd - drawStart;
+            g2.setColor(Color.white);
+            g2.drawString("Draw Time: " + passed, 10, 400);
+            System.out.println("Draw Time: " + passed);
+
+        }
+
+        g2.dispose();
+        
+    }*/
     /*  public void run() {
         // TODO Auto-generated method stub
 
@@ -249,45 +305,5 @@ public class GamePanel extends JPanel implements Runnable{
         }
         //throw new UnsupportedOperationException("Unimplemented method 'run'");
     }*/
-public void paintComponent(Graphics g){
-
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-
-//DEBUG
-long  drawStart = 0;
-if(keyH.checkDrawTime){
-    drawStart = System.nanoTime();
-
-}
-
-//TILE
-tileM.draw(g2); 
-
-//OBJECT
-for(int i = 0; i <obj.length; i++){
-    if (obj[i] != null){
-        obj[i].draw(g2, this);
-    }
-}
-
-//PLAYER
-player.draw(g2);
-
-//UI
-ui.draw(g2);
-
-//DEBUG
-if(keyH.checkDrawTime == true){
-    long drawEnd = System.nanoTime();
-    long passed = drawEnd - drawStart;
-    g2.setColor(Color.white);
-    g2.drawString("Draw Time: " + passed, 10, 400);
-    System.out.println("Draw Time: " + passed);
-
-}
-
-
-        g2.dispose();
-    }
+    
 }

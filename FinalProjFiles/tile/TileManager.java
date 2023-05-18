@@ -42,6 +42,17 @@ public class TileManager {
         setUp(7, "floor01", false);
         setUp(8, "table01", true);
         setUp(9, "door", true);
+        setUp(10, "grass", true);
+        setUp(11, "wall", true);
+        setUp(12, "water", true);
+        setUp(13, "earth", true);
+        setUp(14, "tree", true);
+        setUp(15, "sand", true);
+        setUp(16, "hut", true);
+        setUp(17, "floor01", true);
+        setUp(18, "table01", true);
+        setUp(19, "door", true);
+        setUp(20, "door", true);
 
 
         System.out.println("Image loading finished");
