@@ -30,7 +30,7 @@ public class KeyHandler implements KeyListener {
                 gp.ui.commandNum--;
             }
             else
-            if(code == KeyEvent.VK_S && gp.ui.commandNum != 2){
+            if(code == KeyEvent.VK_S && gp.ui.commandNum != 3){
                 gp.ui.commandNum++;
             }
             
@@ -44,13 +44,16 @@ public class KeyHandler implements KeyListener {
                 if(gp.ui.commandNum == 1){
                     //add later
                 }
-                if(gp.ui.commandNum == 2){
+                if(gp.ui.commandNum==2){
+                    //Tutorial
+                }
+                if(gp.ui.commandNum == 3){
                    System.exit(0);
                 }
             }
         }
 
-
+        else{
         if(code == KeyEvent.VK_W){
             upPressed = true;
         }
@@ -63,6 +66,7 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
+    }
 
         //DEBUG
         if(code == KeyEvent.VK_T){

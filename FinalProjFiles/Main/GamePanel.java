@@ -36,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
      public static int gameState;
      public static int titleState = 0;
      public static int playState = 1;
+     public static int tutorialState = 2;
 
 
      //FOR FULL SCREEN

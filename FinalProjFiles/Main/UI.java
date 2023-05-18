@@ -70,7 +70,7 @@ public class UI {
             drawTitleScreen(g2);
         }
 
-        else{
+        else if(gp.gameState == gp.playState){
         if(gameFinished){
             
             g2.setFont(earthbound.deriveFont(70F));
@@ -107,7 +107,7 @@ public class UI {
  
         }
 
-        else {
+        else{
             g2.setFont(earthbound.deriveFont(55F));
             g2.setColor(Color.WHITE);
             g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
@@ -161,11 +161,47 @@ public class UI {
         g2.drawString(text,x,y);
 
         //Menu Buttons
+        g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
+        
+        text = "CONTROLS:";
+        x = gp.tileSize*2;
+        y = gp.tileSize;
+        g2.drawString(text,x,y);
+
+        text = "    W: UP";
+        x = gp.tileSize*2;
+        y = gp.tileSize+30;
+        g2.drawString(text,x,y);
+
+
+        text = "    A: LEFT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+60;
+        g2.drawString(text,x,y);
+
+        text = "    S: DOWN";
+        x = gp.tileSize*2;
+        y = gp.tileSize+90;
+        g2.drawString(text,x,y);
+
+        text = "    D: RIGHT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+120;
+        g2.drawString(text,x,y);
+
+        text = "       Enter: SELECT";
+        x = gp.tileSize;
+        y = gp.tileSize+150;
+        g2.drawString(text,x,y);
+
+
+     
+
         g2.setFont(earthbound.deriveFont(Font.BOLD,48F));
 
         text = "NEW GAME";
         x = getXforCenteredText(text);
-        y += gp.tileSize*4;
+        y += gp.tileSize*2;
         g2.drawString(text,x,y);
         if(commandNum == 0){
             g2.drawString(">",x-gp.tileSize*1,y);
@@ -178,11 +214,20 @@ public class UI {
         if(commandNum == 1){
             g2.drawString(">",x-gp.tileSize*1,y);
         }
-        text = "QUIT";
+
+        text = "TUTORIAL";
         x = getXforCenteredText(text);
         y += gp.tileSize*2;
         g2.drawString(text,x,y);
         if(commandNum == 2){
+            g2.drawString(">",x-gp.tileSize*1,y);
+        }
+
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+        if(commandNum == 3){
             g2.drawString(">",x-gp.tileSize*1,y);
         }
     }
