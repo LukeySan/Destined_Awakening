@@ -27,32 +27,33 @@ public class TileManager {
         getTileImage();
         loadMap("/res/maps/world01.txt",0);
         loadMap(("/res/maps/interior01.txt"), 1);
+        loadMap("/res/maps/tutorial01.txt",2);
     }
 
     public void getTileImage(){
 
         System.out.println("Image loading started");
-        setUp(0,"grass",false);
-        setUp(1,"wall",true);
-        setUp(2,"water",true);
-        setUp(3,"earth",false);
-        setUp(4,"tree",true);
-        setUp(5,"sand",false);
-        setUp(6, "hut", false);
-        setUp(7, "floor01", false);
-        setUp(8, "table01", true);
-        setUp(9, "door", true);
-        setUp(10, "grass", true);
-        setUp(11, "wall", true);
-        setUp(12, "water", true);
-        setUp(13, "earth", true);
-        setUp(14, "tree", true);
-        setUp(15, "sand", true);
-        setUp(16, "hut", true);
-        setUp(17, "floor01", true);
-        setUp(18, "table01", true);
-        setUp(19, "door", true);
-        setUp(20, "door", true);
+        setUp(0,"10grass",false);
+        setUp(1,"11wall",true);
+        setUp(2,"12water",true);
+        setUp(3,"13earth",false);
+        setUp(4,"14tree",true);
+        setUp(5,"15sand",false);
+        setUp(6, "16hut", false);
+        setUp(7, "17floor01", false);
+        setUp(8, "18table01", true);
+        setUp(9, "19door", true);
+        setUp(10, "10grass", false);
+        setUp(11, "11wall", true);
+        setUp(12, "12water", true);
+        setUp(13, "13earth", false);
+        setUp(14, "14tree", true);
+        setUp(15, "15sand", false);
+        setUp(16, "16hut", true);
+        setUp(17, "17floor01", false);
+        setUp(18, "18table01", true);
+        setUp(19, "19door", true);
+        setUp(20, "19door", true);
 
 
         System.out.println("Image loading finished");

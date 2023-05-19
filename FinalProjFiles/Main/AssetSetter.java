@@ -17,41 +17,62 @@ public class AssetSetter {
 
 
     public void setObject(){
-        switch(GamePanel.currentMap){
-            case 0:
-            gp.obj[0] = new OBJ_Key(gp);
-        gp.obj[0].worldX= 23 * gp.tileSize;
-        gp.obj[0].worldY = 7 * gp.tileSize;
+
+        int mapNum = 0;
+        int i =0;
 
 
-        gp.obj[1] = new OBJ_Key(gp);
-        gp.obj[1].worldX = 23 * gp.tileSize;
-        gp.obj[1].worldY = 40*gp.tileSize;
-        
-        gp.obj[2] = new OBJ_Key(gp);
-        gp.obj[2].worldX = 37 * gp.tileSize;
-        gp.obj[2].worldY = 7  *gp.tileSize;
+            //MAIN MAP OBJECT PLACEMENT
+            gp.obj[mapNum][i] = new OBJ_Key(gp);
+            gp.obj[mapNum][i].worldX= 23 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 7 * gp.tileSize;
 
-        gp.obj[3] = new OBJ_Door(gp);
-        gp.obj[3].worldX = 10 * gp.tileSize;
-        gp.obj[3].worldY = 11*gp.tileSize;
+            i++;
 
-        gp.obj[4] = new OBJ_Door(gp);
-        gp.obj[4].worldX = 8 * gp.tileSize;
-        gp.obj[4].worldY = 28 *gp.tileSize;
+            gp.obj[mapNum][i] = new OBJ_Key(gp);
+            gp.obj[mapNum][i].worldX = 23 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 40*gp.tileSize;
+            i++;
 
-        gp.obj[5] = new OBJ_Door(gp);
-        gp.obj[5].worldX = 12  * gp.tileSize;
-        gp.obj[5].worldY = 22 *gp.tileSize;
+            gp.obj[mapNum][i] = new OBJ_Key(gp);
+            gp.obj[mapNum][i].worldX = 37 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 7  *gp.tileSize;
+            i++;
 
-        gp.obj[6] = new OBJ_Chest(gp);
-        gp.obj[6].worldX = 10 * gp.tileSize;
-        gp.obj[6].worldY = 7*gp.tileSize;
+            gp.obj[mapNum][i] = new OBJ_Door(gp);
+            gp.obj[mapNum][i].worldX = 10 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 11*gp.tileSize;
+            i++;
 
-        gp.obj[7] = new OBJ_Boots(gp);
-        gp.obj[7].worldX = 37 * gp.tileSize; //COLUMN THE NUMBER HERE  IS ONE LESS THANT HE LINE OF TEXT ON THE MAP
-        gp.obj[7].worldY = 42*gp.tileSize; 
-        break;
+            gp.obj[mapNum][i] = new OBJ_Door(gp);
+            gp.obj[mapNum][i].worldX = 8 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 28 *gp.tileSize;
+            i++;
+
+            gp.obj[mapNum][i] = new OBJ_Door(gp);
+            gp.obj[mapNum][i].worldX = 12  * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 22 *gp.tileSize;
+            i++;
+
+            gp.obj[mapNum][i] = new OBJ_Chest(gp);
+            gp.obj[mapNum][i].worldX = 10 * gp.tileSize;
+            gp.obj[mapNum][i].worldY = 7*gp.tileSize;
+            i++;
+
+            gp.obj[mapNum][i] = new OBJ_Boots(gp);
+            gp.obj[mapNum][i].worldX = 37 * gp.tileSize; //COLUMN THE NUMBER HERE  IS ONE LESS THANT HE LINE OF TEXT ON THE MAP
+            gp.obj[mapNum][i].worldY = 42*gp.tileSize; 
+            i++;
+
+            //TUTORIAL MAP OBJECT PLACEMENT
+            mapNum = 2;
+            gp.obj[mapNum][0] = new OBJ_Door(gp);
+            gp.obj[mapNum][0].worldX = 25*gp.tileSize; //COLUMN THE NUMBER HERE  IS ONE LESS THANT HE LINE OF TEXT ON THE MAP
+            gp.obj[mapNum][0].worldY = 4*gp.tileSize;
+            System.out.println("hi");
+            i++;
+
+
 
         }
 
@@ -60,4 +81,4 @@ public class AssetSetter {
 
 
     }
-}
+

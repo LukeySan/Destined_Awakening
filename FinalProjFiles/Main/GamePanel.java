@@ -30,13 +30,15 @@ public class GamePanel extends JPanel implements Runnable{
      public final int worldWidth = tileSize * maxWorldCol;
      public final int worldHeight = tileSize * maxWorldRow;
      public final int maxMap = 10;
-     public static int currentMap = 0;
+     public static int currentMap;
 
      //GAME STATE
      public static int gameState;
      public static int titleState = 0;
      public static int playState = 1;
      public static int tutorialState = 2;
+     public static int playPauseState = 3;
+     public static int tutorialPauseState = 4;
 
 
      //FOR FULL SCREEN
@@ -58,11 +60,12 @@ public class GamePanel extends JPanel implements Runnable{
      public AssetSetter aSetter = new AssetSetter(this);
      public UI ui = new UI(this);
      Thread gameThread; 
+     int count = 0;
 
 
      //ENTITY AND OBJEJCTS
      public Player player = new Player(this,keyH);
-     public SuperObject obj[] = new SuperObject[10];
+     public SuperObject obj[][] = new SuperObject[maxMap][10];
 
 
     public GamePanel(){
@@ -77,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setupGame(){
-       aSetter.setObject();
+        aSetter.setObject();
        playMusic(5);
         gameState = titleState;
 
@@ -106,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
     public void paintComponent(Graphics g){
+        
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
@@ -120,23 +124,49 @@ public class GamePanel extends JPanel implements Runnable{
     if(gameState == titleState){
         ui.draw(g2);  
     }
+    else if(gameState == tutorialState || gameState == tutorialPauseState){
+        currentMap = 2;
+        tileM.draw(g2);
+        for(int i = 0; i <obj[1].length; i++){
+            if (obj[currentMap][i] != null){
+                obj[currentMap][i].draw(g2, this);
+                }
+        }
+        if(count!= 1){
+            Player.worldX = tileSize*25;  
+            Player.worldY = tileSize*25;
+            count++;
+            System.out.println(count);
+         }
+        player.draw(g2);
+        
+        ui.draw(g2);
+
+        if (g2 != null) {
+            g2.dispose();
+        }
+
+
+    }
     
     
     //OTHERS
-    else{
-    //TILE
-    tileM.draw(g2); 
-
-    //OBJECT
-    for(int i = 0; i <obj.length; i++){
-        if (obj[i] != null){
-            obj[i].draw(g2, this);
-            }
+    else if (gameState == playState || gameState == playPauseState){
+            
+            currentMap = 0;
+            
+            
+         //TILE
+            tileM.draw(g2); 
+         //OBJECT
+             for(int i = 0; i <obj[1].length; i++){
+                if (obj[currentMap][i] != null){
+                 obj[currentMap][i].draw(g2, this);
+                }
     }
-
         //PLAYER
         player.draw(g2);
-
+    
         //UI
         ui.draw(g2);
 
@@ -198,8 +228,12 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-        
-        player.update();
+        if(gameState == playState ||gameState == tutorialState ){
+            player.update();
+        }
+        if(gameState == playPauseState || gameState == tutorialPauseState){
+
+        }
 
     } 
 

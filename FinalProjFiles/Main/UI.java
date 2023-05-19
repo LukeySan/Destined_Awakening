@@ -23,6 +23,7 @@ public class UI {
     public boolean gameFinished = false;
     private long lastFrameTime;
     public int commandNum = 0;
+    public int pauseCommandNum = 0;
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -70,7 +71,7 @@ public class UI {
             drawTitleScreen(g2);
         }
 
-        else if(gp.gameState == gp.playState){
+        else if(gp.gameState == gp.playState ||gp.gameState == gp.tutorialState ){
         if(gameFinished){
             
             g2.setFont(earthbound.deriveFont(70F));
@@ -138,11 +139,44 @@ public class UI {
             }
         }
     }
+        else if(gp.gameState == gp.playPauseState || gp.gameState == gp.tutorialPauseState ){
+            drawPauseScreen(g2);
+        }
         
+    }
+
+    public void drawPauseScreen(Graphics2D g2){
+        g2.setFont(earthbound.deriveFont(Font.BOLD,130F));
+        String text = "PAUSED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.setColor(Color.WHITE);
+        g2.drawString(text,x,y);
+
+        g2.setFont(earthbound.deriveFont(Font.BOLD,40F));
+        
+        text = "MAIN MENU";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+
+        text = "LOAD GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+
+        text = "QUIT";
+        x = getXforCenteredText(text);
+        y += gp.tileSize*2;
+        g2.drawString(text,x,y);
+
+        
+
     }
 
     public void drawTitleScreen(Graphics2D g2){
         
+        //BLUE BACKGROUND
         g2.setColor(new Color(57,110,173));
         g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
         

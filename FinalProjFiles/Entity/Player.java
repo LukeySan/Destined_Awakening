@@ -52,6 +52,11 @@ public class Player extends Entity{
             worldY = gp.tileSize*13;
             break;
 
+            case 2:
+            worldX = gp.tileSize*24;
+            worldY = gp.tileSize*21;
+            break;
+
         }
         tempX = worldX;
         tempY = worldY;
@@ -158,20 +163,20 @@ public class Player extends Entity{
     }
     public void pickUpObject(int i){
         if(i!= 999){
-            String objectName = gp.obj[i].name;
+            String objectName = gp.obj[gp.currentMap][i].name;
 
             switch(objectName){
             case "Key":
              gp.playSE(1);
             hasKey++;
-            gp.obj[i] =null;
+            gp.obj[gp.currentMap][i] =null;
             gp.ui.showMessage("You got a key!");
                 break;
                 
             case"Door":
                 if(hasKey> 0){
                     gp.playSE(3);
-                    gp.obj[i] = null;
+                    gp.obj[gp.currentMap][i] = null;
                     hasKey--;
                     gp.ui.showMessage("You opened the door!");
                 }
@@ -184,7 +189,7 @@ public class Player extends Entity{
             case "Boots":
                 gp.playSE(2);
                 speed+=4;
-                gp.obj[i] = null;
+                gp.obj[gp.currentMap][i] = null;
                 gp.ui.showMessage("Speed up!");
 
                 break;
@@ -193,11 +198,11 @@ public class Player extends Entity{
                 gp.ui.gameFinished = true;
                 gp.stopMusic();
                 gp.playSE(4);
-                int tempX = gp.obj[i].worldX;
-                int tempY = gp.obj[i].worldY;
-                gp.obj[i] = new OBJ_Chest_Opened(gp); 
-                gp.obj[i].worldX = tempX;
-                gp.obj[i].worldY = tempY;
+                int tempX = gp.obj[gp.currentMap][i].worldX;
+                int tempY = gp.obj[gp.currentMap][i].worldY;
+                gp.obj[gp.currentMap][i] = new OBJ_Chest_Opened(gp); 
+                gp.obj[gp.currentMap][i].worldX = tempX;
+                gp.obj[gp.currentMap][i].worldY = tempY;
                 gp.ui.showMessage("Chest opened");
 
                 break;

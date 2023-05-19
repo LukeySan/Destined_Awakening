@@ -3,6 +3,8 @@ package Main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import Entity.Player;
+
 
 
 public class KeyHandler implements KeyListener {
@@ -15,6 +17,7 @@ public class KeyHandler implements KeyListener {
     GamePanel gp;
     public KeyHandler(GamePanel gp){
         this.gp = gp;
+        
     }
 
     @Override
@@ -28,45 +31,90 @@ public class KeyHandler implements KeyListener {
         if(gp.gameState == gp.titleState){
             if(code == KeyEvent.VK_W && gp.ui.commandNum != 0){
                 gp.ui.commandNum--;
+                gp.playSE(6);
             }
-            else
             if(code == KeyEvent.VK_S && gp.ui.commandNum != 3){
                 gp.ui.commandNum++;
+                gp.playSE(6);
             }
-            
             if(code == KeyEvent.VK_ENTER){
+
                 if(gp.ui.commandNum == 0){
+            
+                    gp.playSE(7);
                     gp.gameState = gp.playState;
                     gp.stopMusic();
                     gp.playMusic(0);
 
                 }
+
                 if(gp.ui.commandNum == 1){
-                    //add later
+                    gp.playSE(7);
+                    //load file
                 }
                 if(gp.ui.commandNum==2){
+                    
+                    gp.playSE(7);
+                    gp.gameState = gp.tutorialState;
+                    System.out.println("Asset set Called");
+                    gp.stopMusic();
+                    gp.playMusic(8);
+                    
+                    //Player.worldX = gp.tileSize*24;
+                    //Player.worldY = gp.tileSize*21;
                     //Tutorial
                 }
                 if(gp.ui.commandNum == 3){
+                    gp.playSE(7);
                    System.exit(0);
                 }
             }
         }
 
-        else{
-        if(code == KeyEvent.VK_W){
-            upPressed = true;
+        else if (gp.gameState == gp.playState || gp.gameState == gp.playPauseState){
+        if(code == KeyEvent.VK_W && gp.gameState == gp.playState){
+            upPressed = true;       
         }
-        if(code == KeyEvent.VK_S){
+        if(code == KeyEvent.VK_S && gp.gameState == gp.playState){
             downPressed = true;
         }
-        if(code == KeyEvent.VK_A){
+        if(code == KeyEvent.VK_A && gp.gameState == gp.playState){
             leftPressed = true;
         }
-        if(code == KeyEvent.VK_D){
+        if(code == KeyEvent.VK_D && gp.gameState == gp.playState){
             rightPressed = true;
         }
-    }
+        if(code == KeyEvent.VK_P){
+            if(gp.gameState == gp.playState){
+                gp.gameState = gp.playPauseState;
+            }
+            else if (gp.gameState == gp.playPauseState){
+                gp.gameState = gp.playState;
+            }
+        }
+      }
+      else if (gp.gameState == gp.tutorialState || gp.gameState == gp.tutorialPauseState){
+        if(code == KeyEvent.VK_W && gp.gameState == gp.tutorialState){
+            upPressed = true;       
+        }
+        if(code == KeyEvent.VK_S && gp.gameState == gp.tutorialState){
+            downPressed = true;
+        }
+        if(code == KeyEvent.VK_A && gp.gameState == gp.tutorialState){
+            leftPressed = true;
+        }
+        if(code == KeyEvent.VK_D && gp.gameState == gp.tutorialState){
+            rightPressed = true;
+        }
+        if(code == KeyEvent.VK_P){
+            if(gp.gameState == gp.tutorialState){
+                gp.gameState = gp.tutorialPauseState;
+            }
+            else if (gp.gameState == gp.tutorialPauseState){
+                gp.gameState = gp.tutorialState;
+            }
+        }
+      }
 
         //DEBUG
         if(code == KeyEvent.VK_T){
