@@ -41,20 +41,18 @@ public class Player extends Entity{
         getPlayerImage();
     }
     public void setDefaultValues(){
-        switch (GamePanel.currentMap){
-            case 0:
+        System.out.println("DEFAULT VALUES SET");
+        switch (GamePanel.gameState){
+            case 1:
             worldX = gp.tileSize*23;
             worldY = gp.tileSize*21;
-            break;
-
-            case 1:
-            worldX = gp.tileSize*12; 
-            worldY = gp.tileSize*13;
+            System.out.println("MAIN VALUES SET");
             break;
 
             case 2:
             worldX = gp.tileSize*24;
             worldY = gp.tileSize*21;
+            System.out.println("TUTORIAL VALUES SET");
             break;
 
         }

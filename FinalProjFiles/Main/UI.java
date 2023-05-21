@@ -23,7 +23,9 @@ public class UI {
     public boolean gameFinished = false;
     private long lastFrameTime;
     public int commandNum = 0;
-    public int pauseCommandNum = 0;
+    public int tutorialPauseCommandNum = 0;
+    public int playPauseCommandNum = 0;
+
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -142,8 +144,12 @@ public class UI {
         else if(gp.gameState == gp.playPauseState || gp.gameState == gp.tutorialPauseState ){
             drawPauseScreen(g2);
         }
+        else if(gp.gameState  == gp.tutorialPauseState ){
+            drawPauseScreen(g2);
+        }
         
     }
+
 
     public void drawPauseScreen(Graphics2D g2){
         g2.setFont(earthbound.deriveFont(Font.BOLD,130F));
@@ -153,22 +159,76 @@ public class UI {
         g2.setColor(Color.WHITE);
         g2.drawString(text,x,y);
 
+        
+
         g2.setFont(earthbound.deriveFont(Font.BOLD,40F));
         
-        text = "MAIN MENU";
-        x = getXforCenteredText(text);
-        y += gp.tileSize*2;
+        
+            text = "MAIN MENU";
+            x = getXforCenteredText(text);
+            y += gp.tileSize*2;
+            g2.drawString(text,x,y);
+            if(gp.gameState == gp.playPauseState && playPauseCommandNum == 0){
+                g2.drawString(">",x-gp.tileSize*1,y);
+            }
+            if(gp.gameState == gp.tutorialPauseState && tutorialPauseCommandNum == 0){
+                g2.drawString(">",x-gp.tileSize*1,y);
+            }
+
+
+            if(gp.gameState == gp.playPauseState){
+            text = "TUTORIAL";
+            x = getXforCenteredText(text);
+            y += gp.tileSize*2;
+            g2.drawString(text,x,y);
+            }
+            if(gp.gameState == gp.playPauseState && playPauseCommandNum == 1){
+                g2.drawString(">",x-gp.tileSize*1,y);
+            }
+        if(gp.gameState == gp.playPauseState){
+            text = "SAVE GAME";
+            x = getXforCenteredText(text);
+            y += gp.tileSize*2;
+            g2.drawString(text,x,y);
+        }
+        if(gp.gameState == gp.playPauseState && playPauseCommandNum == 2){
+            g2.drawString(">",x-gp.tileSize*1,y);
+        }
+
+        g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
+        
+        text = "CONTROLS:";
+        x = gp.tileSize*2;
+        y = gp.tileSize;
         g2.drawString(text,x,y);
 
-        text = "LOAD GAME";
-        x = getXforCenteredText(text);
-        y += gp.tileSize*2;
+        text = "    W: UP";
+        x = gp.tileSize*2;
+        y = gp.tileSize+30;
         g2.drawString(text,x,y);
 
-        text = "QUIT";
-        x = getXforCenteredText(text);
-        y += gp.tileSize*2;
+
+        text = "    A: LEFT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+60;
         g2.drawString(text,x,y);
+
+        text = "    S: DOWN";
+        x = gp.tileSize*2;
+        y = gp.tileSize+90;
+        g2.drawString(text,x,y);
+
+        text = "    D: RIGHT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+120;
+        g2.drawString(text,x,y);
+
+        text = "       Enter: SELECT";
+        x = gp.tileSize;
+        y = gp.tileSize+150;
+        g2.drawString(text,x,y);
+
+        
 
         
 
