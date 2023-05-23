@@ -162,9 +162,9 @@ public class UI {
         
 
         g2.setFont(earthbound.deriveFont(Font.BOLD,40F));
-        
-        
-            text = "MAIN MENU";
+            
+            //Setup Resume
+            text = "RESUME";
             x = getXforCenteredText(text);
             y += gp.tileSize*2;
             g2.drawString(text,x,y);
@@ -175,16 +175,20 @@ public class UI {
                 g2.drawString(">",x-gp.tileSize*1,y);
             }
 
-
-            if(gp.gameState == gp.playPauseState){
-            text = "TUTORIAL";
+        
+            text = "MAIN MENU";
             x = getXforCenteredText(text);
             y += gp.tileSize*2;
             g2.drawString(text,x,y);
-            }
             if(gp.gameState == gp.playPauseState && playPauseCommandNum == 1){
                 g2.drawString(">",x-gp.tileSize*1,y);
             }
+            if(gp.gameState == gp.tutorialPauseState && tutorialPauseCommandNum == 1){
+                g2.drawString(">",x-gp.tileSize*1,y);
+            }
+
+
+            
         if(gp.gameState == gp.playPauseState){
             text = "SAVE GAME";
             x = getXforCenteredText(text);

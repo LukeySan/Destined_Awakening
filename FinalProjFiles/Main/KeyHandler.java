@@ -109,8 +109,12 @@ public class KeyHandler implements KeyListener {
                 }
             }
             if(code == KeyEvent.VK_ENTER){
-
                 if(gp.ui.playPauseCommandNum == 0){
+                    gp.playSE(7);
+                    gp.gameState = gp.playState;
+                }
+
+                if(gp.ui.playPauseCommandNum == 1){
             
                     gp.playSE(7);
                     gp.gameState = gp.titleState;
@@ -120,19 +124,11 @@ public class KeyHandler implements KeyListener {
 
                 }
 
-                if(gp.ui.playPauseCommandNum == 1){
-                    //tutorial
+                if(gp.ui.playPauseCommandNum == 2){
                     gp.playSE(7);
-                    gp.gameState = gp.tutorialState;
-                    gp.player.setDefaultValues();
-                    gp.stopMusic();
-                    gp.playMusic(8);
-                    //load file
-                }
-                if(gp.ui.playPauseCommandNum==2){
-                    
                     //Save Game
                 }
+                
             }
         }
 
@@ -157,6 +153,14 @@ public class KeyHandler implements KeyListener {
         }
       }
       else if (gp.gameState == gp.tutorialPauseState ){
+        if(code == KeyEvent.VK_W && gp.gameState == gp.tutorialPauseState && gp.ui.tutorialPauseCommandNum != 0){
+            gp.ui.tutorialPauseCommandNum--;
+            gp.playSE(6);
+        }
+        if(code == KeyEvent.VK_S && gp.gameState == gp.tutorialPauseState && gp.ui.tutorialPauseCommandNum != 1){
+            gp.ui.tutorialPauseCommandNum++;
+            gp.playSE(6);
+        }
         
         if(code == KeyEvent.VK_P){
             if(gp.gameState == gp.tutorialPauseState){
@@ -164,13 +168,15 @@ public class KeyHandler implements KeyListener {
             }
         }
         if(code == KeyEvent.VK_ENTER){
-
             if(gp.ui.tutorialPauseCommandNum == 0){
+                gp.gameState = gp.tutorialState;
+            }
+
+            if(gp.ui.tutorialPauseCommandNum == 1){
         
                 gp.playSE(7);
                 gp.gameState = gp.titleState;
                 gp.player.setDefaultValues();
-
                 gp.stopMusic();
                 gp.playMusic(5);
 

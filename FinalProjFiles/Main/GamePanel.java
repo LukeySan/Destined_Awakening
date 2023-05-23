@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import Main.KeyHandler;
 import object.SuperObject;
 import tile.TileManager;
+import Entity.Entity;
 import Entity.Player;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
      //ENTITY AND OBJEJCTS
      public Player player = new Player(this,keyH);
      public SuperObject obj[][] = new SuperObject[maxMap][10];
+     public Entity npc[][] = new Entity[maxMap][10];
 
 
     public GamePanel(){
@@ -81,7 +83,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
         aSetter.setObject();
-       playMusic(5);
+        aSetter.setNPC();
+        playMusic(5);
         gameState = titleState;
 
        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //Buffered image as large as the game window
@@ -132,14 +135,16 @@ public class GamePanel extends JPanel implements Runnable{
                 obj[currentMap][i].draw(g2, this);
                 }
         }
-        if(count!= 1){
-            Player.worldX = tileSize*25;  
-            Player.worldY = tileSize*25;
+         if(count!= 1){
+            player.worldX = tileSize*25;  
+            player.worldY = tileSize*25;
             count++;
             System.out.println(count);
          }
         player.draw(g2);
+
         
+
         ui.draw(g2);
 
         if (g2 != null) {
@@ -166,9 +171,16 @@ public class GamePanel extends JPanel implements Runnable{
     }
         //PLAYER
         player.draw(g2);
+        for(int i = 0; i<npc.length; i++){
+            if(npc[currentMap][i]!= null){
+                npc[currentMap][i].draw(g2);
+            }
+        }
     
         //UI
         ui.draw(g2);
+
+        
 
         
 
@@ -229,7 +241,15 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update(){
         if(gameState == playState ||gameState == tutorialState ){
+            //Update player position
             player.update();
+
+            //Update NPC position
+            for(int i = 0; i<npc.length; i++){
+                if(npc[currentMap][i]!=null){
+                    npc[currentMap][i].update();
+                }
+            }
         }
         if(gameState == playPauseState || gameState == tutorialPauseState){
 

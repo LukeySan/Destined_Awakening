@@ -19,9 +19,12 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int hasKey = 0;
+    int standCounter = 0;
 
     
     public Player(GamePanel gp, KeyHandler keyH){
+        super(gp);
+
         this.gp = gp;
         this.keyH = keyH;
 
@@ -61,38 +64,29 @@ public class Player extends Entity{
         speed = 7;
         direction = "down";
     }
+
+    
+
+
     public void getPlayerImage(){
 
-        up1 = setup("boy_up_1");
-        up2 = setup("boy_up_2");
-        up3 = setup("boy_up_3");
-        down1 = setup("boy_down_1");
-        down2 = setup("boy_down_2");
-        down3 = setup("boy_down_3");
-        left1 = setup("boy_left_1");
-        left2 = setup("boy_left_2");
-        left3 = setup("boy_left_3");
-        right1 = setup("boy_right_1");
-        right2 = setup("boy_right_2");
-        right3 = setup("boy_right_3");
+        up1 = setup("/res/player/boy_up_1");
+        up2 = setup("/res/player/boy_up_2");
+        up3 = setup("/res/player/boy_up_3");
+        down1 = setup("/res/player/boy_down_1");
+        down2 = setup("/res/player/boy_down_2");
+        down3 = setup("/res/player/boy_down_3");
+        left1 = setup("/res/player/boy_left_1");
+        left2 = setup("/res/player/boy_left_2");
+        left3 = setup("/res/player/boy_left_3");
+        right1 = setup("/res/player/boy_right_1");
+        right2 = setup("/res/player/boy_right_2");
+        right3 = setup("/res/player/boy_right_3");
 
         
     }
 
-    public BufferedImage setup(String imageName){
-
-        UtilityTool uTool = new UtilityTool ();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/player/" + imageName + ".png"));
-            image = uTool.scaleImage(image,gp.tileSize,gp.tileSize);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
+    
 
     public void update(){
         if(keyH.upPressed == true || keyH.downPressed == true || 

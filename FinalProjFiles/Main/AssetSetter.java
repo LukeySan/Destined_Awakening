@@ -1,5 +1,6 @@
 package Main;
 
+import Entity.NPC_OldMan;
 import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
@@ -69,14 +70,26 @@ public class AssetSetter {
             gp.obj[mapNum][0] = new OBJ_Door(gp);
             gp.obj[mapNum][0].worldX = 25*gp.tileSize; //COLUMN THE NUMBER HERE  IS ONE LESS THANT HE LINE OF TEXT ON THE MAP
             gp.obj[mapNum][0].worldY = 4*gp.tileSize;
-            System.out.println("hi");
             i++;
 
 
 
         }
 
+    public void setNPC(){
+        int mapNum = 0;
+        int i = 0;
 
+        gp.npc[mapNum][i] = new NPC_OldMan(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize*21;
+        System.out.println("NPC");
+        gp.npc[mapNum][i].worldY = gp.tileSize*21;
+        
+
+        i++;
+
+
+    }
         
 
 
