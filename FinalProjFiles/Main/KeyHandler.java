@@ -9,7 +9,7 @@ import Entity.Player;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -91,6 +91,9 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.playPauseState;
             }
         }
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
     }
         else if (gp.gameState == gp.playPauseState ){
             if(code == KeyEvent.VK_W && gp.gameState == gp.playPauseState && gp.ui.playPauseCommandNum != 0){
@@ -169,6 +172,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ENTER){
             if(gp.ui.tutorialPauseCommandNum == 0){
+                gp.playSE(7);
                 gp.gameState = gp.tutorialState;
             }
 
@@ -183,6 +187,13 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
+        else if (gp.gameState  == gp.playDialogueState){
+            if(code == KeyEvent.VK_ENTER){
+                gp.playSE(7);
+
+                gp.gameState = gp.playState;
+            }
+        }
 
         //DEBUG
         if(code == KeyEvent.VK_T){

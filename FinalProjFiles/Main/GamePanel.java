@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
      public static int tutorialState = 2;
      public static int playPauseState = 3;
      public static int tutorialPauseState = 4;
+     public final int playDialogueState =  5;
 
 
      //FOR FULL SCREEN
@@ -54,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     //SYSTEM
      TileManager tileM = new TileManager(this);
-     KeyHandler keyH = new KeyHandler(this);
+     public KeyHandler keyH = new KeyHandler(this);
      Sound se = new Sound();
      Sound music = new Sound();
      public CollisionChecker cChecker =  new CollisionChecker(this);
@@ -159,6 +160,39 @@ public class GamePanel extends JPanel implements Runnable{
     else if (gameState == playState || gameState == playPauseState){
             
             currentMap = 0;
+            
+            
+         //TILE
+            tileM.draw(g2); 
+         //OBJECT
+             for(int i = 0; i <obj[1].length; i++){
+                if (obj[currentMap][i] != null){
+                 obj[currentMap][i].draw(g2, this);
+                }
+    }
+        //PLAYER
+        player.draw(g2);
+        for(int i = 0; i<npc.length; i++){
+            if(npc[currentMap][i]!= null){
+                npc[currentMap][i].draw(g2);
+            }
+        }
+    
+        //UI
+        ui.draw(g2);
+
+        
+
+        
+
+
+        if (g2 != null) {
+            g2.dispose();
+        }
+    }
+
+    else if(gameState == playDialogueState ){
+        currentMap = 0;
             
             
          //TILE

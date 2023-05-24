@@ -113,6 +113,10 @@ public class Player extends Entity{
                 int objIndex = gp.cChecker.checkObject(this,true);
                 pickUpObject(objIndex);
 
+                //check NPC collision
+                int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
+
 
 
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -153,6 +157,19 @@ public class Player extends Entity{
             
 
     }
+
+    public void interactNPC(int i ){
+        if(i!= 999){
+            if(gp.keyH.enterPressed){
+                gp.gameState = gp.playDialogueState;
+                gp.npc[gp.currentMap][i].speak();
+            }
+        }
+        gp.keyH.enterPressed = false;
+
+    }
+
+
     public void pickUpObject(int i){
         if(i!= 999){
             String objectName = gp.obj[gp.currentMap][i].name;

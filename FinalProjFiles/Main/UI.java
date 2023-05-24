@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -25,6 +26,8 @@ public class UI {
     public int commandNum = 0;
     public int tutorialPauseCommandNum = 0;
     public int playPauseCommandNum = 0;
+    public String currentDialogue = "";
+    
 
 
     double playTime;
@@ -67,6 +70,7 @@ public class UI {
     public void draw(Graphics2D g2){
 
         this.g2 = g2;
+      
 
         //Title state
         if(gp.gameState == gp.titleState){
@@ -147,7 +151,43 @@ public class UI {
         else if(gp.gameState  == gp.tutorialPauseState ){
             drawPauseScreen(g2);
         }
+        if(gp.gameState == gp.playDialogueState){
+            drawDialogueScreen();
+        }
         
+    }
+
+    public void drawDialogueScreen(){
+
+        //WINDOW
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2;
+        int width = gp.screenWidth - (gp.tileSize*4);
+        int height = gp.tileSize*4;
+        drawSubWindow(x,y,width,height);
+
+        g2.setFont(earthbound.deriveFont(Font.PLAIN,35F));
+        x+= gp.tileSize;
+        y+=gp.tileSize;
+
+        for(String line : currentDialogue.split("\n")){
+            g2.drawString(line,x,y);
+            y+= 40;
+        }
+        
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height){
+        Color c= new Color(0,0,0,200);
+        g2.setColor(c);
+        g2.fillRoundRect(x,y,width,height,35,35);
+
+        c = new Color(255,255,255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
+
+
     }
 
 
