@@ -25,21 +25,17 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter;
-    String dialogues[] = new String[20];
-    int dialogueIndex= 0;
+    public String dialogues[][] = new String[20][20];
+    public int dialogueIndex= 0;
+    public int dialogueSet = 0;
 
     public Entity(GamePanel gp){
         this.gp = gp;
     }
 
     public void setAction(){}
-    public void speak(){
-        if(dialogues[dialogueIndex] == null){
-            dialogueIndex = 0;
-        }
-        gp.ui.currentDialogue = dialogues[dialogueIndex];
-        dialogueIndex++;
-
+    public void speak(){  }
+    public void facePlayer(){
         switch(gp.player.direction){
             case"up":
                 direction = "down";
@@ -55,6 +51,20 @@ public class Entity {
                 break;
 
         }
+    }
+    public void startDialogue(Entity entity, int setNum){
+
+        if(gp.currentMap == 0){
+            gp.gameState = gp.playDialogueState;
+        }
+        else if (gp.currentMap == 2){
+            gp.gameState = gp.tutorialDialogueState;
+        }
+        gp.ui.npc = entity;
+        dialogueSet = setNum;
+
+
+
     }
 
     public void update(){

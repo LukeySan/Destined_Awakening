@@ -117,8 +117,8 @@ public class UI {
         else{
             g2.setFont(earthbound.deriveFont(55F));
             g2.setColor(Color.WHITE);
-            g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize/2,gp.tileSize,gp.tileSize,null);
-            g2.drawString("x "+gp.player.hasKey,74,65);
+            g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize*10,gp.tileSize,gp.tileSize,null);
+            g2.drawString("x "+gp.player.hasKey,74,530);
             /*The Y value of the drawString actually indicates the bottom of the text, rather than the top like most objects. */
             
             //TIME
@@ -143,6 +143,40 @@ public class UI {
     
                 }
             }
+            g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
+            String text = "";
+            int x;
+            int y;
+        text = "CONTROLS:";
+        x = gp.tileSize*2;
+        y = gp.tileSize;
+        g2.drawString(text,x,y);
+
+        text = "    W: UP";
+        x = gp.tileSize*2;
+        y = gp.tileSize+30;
+        g2.drawString(text,x,y);
+
+
+        text = "    A: LEFT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+60;
+        g2.drawString(text,x,y);
+
+        text = "    S: DOWN";
+        x = gp.tileSize*2;
+        y = gp.tileSize+90;
+        g2.drawString(text,x,y);
+
+        text = "    D: RIGHT";
+        x = gp.tileSize*2;
+        y = gp.tileSize+120;
+        g2.drawString(text,x,y);
+
+        text = "       Enter: SELECT/INTERACT";
+        x = gp.tileSize;
+        y = gp.tileSize+150;
+        g2.drawString(text,x,y);
         }
     }
         else if(gp.gameState == gp.playPauseState || gp.gameState == gp.tutorialPauseState ){
@@ -152,6 +186,11 @@ public class UI {
             drawPauseScreen(g2);
         }
         if(gp.gameState == gp.playDialogueState){
+            drawDialogueScreen();
+        }
+
+
+        if(gp.gameState == gp.tutorialDialogueState){
             drawDialogueScreen();
         }
         
@@ -267,7 +306,7 @@ public class UI {
         y = gp.tileSize+120;
         g2.drawString(text,x,y);
 
-        text = "       Enter: SELECT";
+        text = "       Enter: SELECT/INTERACT";
         x = gp.tileSize;
         y = gp.tileSize+150;
         g2.drawString(text,x,y);
@@ -298,7 +337,6 @@ public class UI {
         g2.setColor(Color.white);
         g2.drawString(text,x,y);
 
-        //Menu Buttons
         g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
         
         text = "CONTROLS:";
@@ -327,14 +365,14 @@ public class UI {
         y = gp.tileSize+120;
         g2.drawString(text,x,y);
 
-        text = "       Enter: SELECT";
+        text = "       Enter: SELECT/INTERACT";
         x = gp.tileSize;
         y = gp.tileSize+150;
         g2.drawString(text,x,y);
 
 
      
-
+        //Menu Buttons
         g2.setFont(earthbound.deriveFont(Font.BOLD,48F));
 
         text = "NEW GAME";

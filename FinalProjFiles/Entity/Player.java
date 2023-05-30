@@ -90,7 +90,7 @@ public class Player extends Entity{
 
     public void update(){
         if(keyH.upPressed == true || keyH.downPressed == true || 
-            keyH.leftPressed == true || keyH.rightPressed == true){
+            keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true){
         
                 if(keyH.upPressed == true){
                     direction = "up";
@@ -120,7 +120,7 @@ public class Player extends Entity{
 
 
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
-                if(collisionOn == false){
+                if(collisionOn == false && keyH.enterPressed == false){
                     switch(direction){
                         case "up":
                             worldY -= speed;
@@ -137,6 +137,8 @@ public class Player extends Entity{
 
                     }
                 }
+
+                keyH.enterPressed = false;
 
 
                 spriteCounter++;
@@ -160,8 +162,12 @@ public class Player extends Entity{
 
     public void interactNPC(int i ){
         if(i!= 999){
-            if(gp.keyH.enterPressed){
+            if(gp.keyH.enterPressed && gp.currentMap == 0){
                 gp.gameState = gp.playDialogueState;
+                gp.npc[gp.currentMap][i].speak();
+            }
+            else if(gp.keyH.enterPressed && gp.currentMap == 2){
+                gp.gameState = gp.tutorialDialogueState;
                 gp.npc[gp.currentMap][i].speak();
             }
         }

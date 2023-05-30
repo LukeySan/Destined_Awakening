@@ -154,6 +154,9 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = gp.tutorialPauseState;
             }
         }
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
+        }
       }
       else if (gp.gameState == gp.tutorialPauseState ){
         if(code == KeyEvent.VK_W && gp.gameState == gp.tutorialPauseState && gp.ui.tutorialPauseCommandNum != 0){
@@ -189,9 +192,22 @@ public class KeyHandler implements KeyListener {
     }
         else if (gp.gameState  == gp.playDialogueState){
             if(code == KeyEvent.VK_ENTER){
-                gp.playSE(7);
-
+                gp.playSE(7);         
+                enterPressed = true;    
                 gp.gameState = gp.playState;
+                
+
+
+            }
+        }
+
+        else if (gp.gameState  == gp.tutorialDialogueState){
+            if(code == KeyEvent.VK_ENTER){
+                gp.playSE(7);             
+                gp.gameState = gp.tutorialState;
+                
+
+
             }
         }
 

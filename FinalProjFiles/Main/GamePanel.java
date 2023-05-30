@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable{
      public static int playPauseState = 3;
      public static int tutorialPauseState = 4;
      public final int playDialogueState =  5;
+     public final int tutorialDialogueState = 6;
 
 
      //FOR FULL SCREEN
@@ -143,6 +144,12 @@ public class GamePanel extends JPanel implements Runnable{
             System.out.println(count);
          }
         player.draw(g2);
+        for(int i = 0; i<npc.length; i++){
+            if(npc[currentMap][i]!= null){
+                npc[currentMap][i].draw(g2);
+                
+            }
+        }
 
         
 
@@ -175,6 +182,7 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i<npc.length; i++){
             if(npc[currentMap][i]!= null){
                 npc[currentMap][i].draw(g2);
+                
             }
         }
     
@@ -191,6 +199,38 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    else if(gameState == tutorialDialogueState ){
+        currentMap = 2;
+            
+            
+         //TILE
+            tileM.draw(g2); 
+         //OBJECT
+             for(int i = 0; i <obj[1].length; i++){
+                if (obj[currentMap][i] != null){
+                 obj[currentMap][i].draw(g2, this);
+                }
+    }
+        //PLAYER
+        player.draw(g2);
+        for(int i = 0; i<npc.length; i++){
+            if(npc[currentMap][i]!= null){
+                npc[currentMap][i].draw(g2);
+            }
+        }
+    
+        //UI
+        ui.draw(g2);
+
+        
+
+        
+
+
+        if (g2 != null) {
+            g2.dispose();
+        }
+    }
     else if(gameState == playDialogueState ){
         currentMap = 0;
             

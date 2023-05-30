@@ -11,12 +11,12 @@ import Main.KeyHandler;
 
 
 
-public class NPC_OldMan extends Entity{
+public class NPC_TutOldMan extends Entity{
 
     KeyHandler keyH;
 
 
-    public NPC_OldMan (GamePanel gp){
+    public NPC_TutOldMan (GamePanel gp){
         super(gp);
         
         
@@ -41,16 +41,10 @@ public class NPC_OldMan extends Entity{
 
     public void setDialogue(){
 
-        dialogues[0][0] = "Hello lad";
-        dialogues[0][1] = "So you've come to this island to find the treasure?";
-        dialogues[0][2] = "I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
-        dialogues[0][3] = "Well, good luck on you.";
-
-        dialogues[1][0] = "If you get tired you can rest at the water";
-        dialogues[1][1] = "However, the monsters reappear if you rest. \nI don't know why but that's how it works.";
-        dialogues[1][2] = "In any case, don't push yourself too hard.";
-
-        dialogues[2][0]= "I wonder how to open that door...";
+        dialogues[0][0] = "Welcome to the training grounds!\nFind the key needed to open the door!";
+        dialogues[0][1] = "Visit the different sections and defeat the \ndifferent monsters to search for the key!";
+        
+        
         
 
 
@@ -81,6 +75,7 @@ public class NPC_OldMan extends Entity{
         actionLockCounter = 0;
      }
     }
+    //VIDEO 51 CURRENTLY ON
     public void speak(){
         facePlayer();
         startDialogue(this, dialogueSet);
