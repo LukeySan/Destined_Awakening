@@ -194,7 +194,6 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_ENTER){
                 gp.playSE(7);         
                 enterPressed = true;    
-                gp.gameState = gp.playState;
                 
 
 
@@ -203,8 +202,8 @@ public class KeyHandler implements KeyListener {
 
         else if (gp.gameState  == gp.tutorialDialogueState){
             if(code == KeyEvent.VK_ENTER){
-                gp.playSE(7);             
-                gp.gameState = gp.tutorialState;
+                gp.playSE(7);   
+                enterPressed = true;              
                 
 
 

@@ -44,10 +44,6 @@ public class NPC_TutOldMan extends Entity{
         dialogues[0][0] = "Welcome to the training grounds!\nFind the key needed to open the door!";
         dialogues[0][1] = "Visit the different sections and defeat the \ndifferent monsters to search for the key!";
         
-        
-        
-
-
     }
     
     public void setAction(){

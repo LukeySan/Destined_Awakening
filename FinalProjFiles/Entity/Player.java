@@ -63,6 +63,10 @@ public class Player extends Entity{
         tempY = worldY;
         speed = 7;
         direction = "down";
+
+        //Player Status
+        maxLife = 6;
+        life = maxLife;
     }
 
     
@@ -117,6 +121,9 @@ public class Player extends Entity{
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
 
+                //check event collision
+                gp.eHandler.checkEvent();
+
 
 
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -163,15 +170,12 @@ public class Player extends Entity{
     public void interactNPC(int i ){
         if(i!= 999){
             if(gp.keyH.enterPressed && gp.currentMap == 0){
-                gp.gameState = gp.playDialogueState;
                 gp.npc[gp.currentMap][i].speak();
             }
             else if(gp.keyH.enterPressed && gp.currentMap == 2){
-                gp.gameState = gp.tutorialDialogueState;
                 gp.npc[gp.currentMap][i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
 
     }
 

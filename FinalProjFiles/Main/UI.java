@@ -10,14 +10,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
+import Entity.Entity;
+import object.OBJ_Heart;
 import object.OBJ_Key;
+import object.SuperObject;
 
 public class UI {
     
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B, earthbound,title;
-    BufferedImage keyImage;
+    BufferedImage keyImage, heart_full , heart_half , heart_blank;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -27,6 +30,7 @@ public class UI {
     public int tutorialPauseCommandNum = 0;
     public int playPauseCommandNum = 0;
     public String currentDialogue = "";
+    public Entity npc;
     
 
 
@@ -47,6 +51,13 @@ public class UI {
         catch(IOException e){
             e.printStackTrace();
         }
+
+
+        //GUI OBJECTS
+        SuperObject heart = new OBJ_Heart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
 
 
 
@@ -78,6 +89,14 @@ public class UI {
         }
 
         else if(gp.gameState == gp.playState ||gp.gameState == gp.tutorialState ){
+            if(gp.keyH.checkDrawTime == true){
+                String text;
+
+                g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
+                text = gp.player.worldX + "";
+                
+        
+            }
         if(gameFinished){
             
             g2.setFont(earthbound.deriveFont(70F));
@@ -121,6 +140,8 @@ public class UI {
             g2.drawString("x "+gp.player.hasKey,74,530);
             /*The Y value of the drawString actually indicates the bottom of the text, rather than the top like most objects. */
             
+            drawPlayerLife();
+
             //TIME
             //playTime += (double)1/60;
             long currentTime = System.nanoTime();
@@ -147,6 +168,9 @@ public class UI {
             String text = "";
             int x;
             int y;
+        if(gp.gameState == gp.tutorialState){
+            g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
+        
         text = "CONTROLS:";
         x = gp.tileSize*2;
         y = gp.tileSize;
@@ -179,21 +203,67 @@ public class UI {
         g2.drawString(text,x,y);
         }
     }
+    }
         else if(gp.gameState == gp.playPauseState || gp.gameState == gp.tutorialPauseState ){
+            drawPlayerLife();
+
             drawPauseScreen(g2);
+
         }
         else if(gp.gameState  == gp.tutorialPauseState ){
+            drawPlayerLife();
+
             drawPauseScreen(g2);
+
         }
         if(gp.gameState == gp.playDialogueState){
+            drawPlayerLife();
+
             drawDialogueScreen();
+
         }
 
 
         if(gp.gameState == gp.tutorialDialogueState){
+            drawPlayerLife();
+
             drawDialogueScreen();
+
         }
         
+    }
+
+    public void drawPlayerLife(){
+
+
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+
+        //DRAW MAX LIFE
+        while(i<gp.player.maxLife/2){
+            g2.drawImage(heart_blank,x,y,null);
+            i++;
+            x+= gp.tileSize;
+
+        }
+
+        //RESET
+         x = gp.tileSize/2;
+         y = gp.tileSize/2;
+         i = 0;
+
+         //DRAW CURRENT LIFE
+         while (i<gp.player.life){
+            g2.drawImage(heart_half,x,y,null);
+            i++;
+            if(i<gp.player.life){
+                g2.drawImage(heart_full,x,y,null);
+            }
+            i++;
+            x+= gp.tileSize;
+         }
+
     }
 
     public void drawDialogueScreen(){
@@ -208,6 +278,35 @@ public class UI {
         g2.setFont(earthbound.deriveFont(Font.PLAIN,35F));
         x+= gp.tileSize;
         y+=gp.tileSize;
+
+        if(npc.dialogues[npc.dialogueSet][npc.dialogueIndex]!= null){
+            currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+
+            if(gp.keyH.enterPressed == true){
+                if(gp.gameState == gp.tutorialDialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.enterPressed = false;
+                }
+                if(gp.gameState == gp.playDialogueState){
+                    npc.dialogueIndex++;
+                    gp.keyH.enterPressed = false;
+                }
+            }
+
+        }
+        else{
+            npc.dialogueIndex = 0;
+
+            if(gp.gameState == gp.tutorialDialogueState){
+                gp.gameState = gp.tutorialState;
+            }
+            else if (gp.gameState == gp.playDialogueState){
+                gp.gameState = gp.playState;
+            }
+
+        }
+
+ 
 
         for(String line : currentDialogue.split("\n")){
             g2.drawString(line,x,y);
