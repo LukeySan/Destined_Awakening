@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -70,8 +73,9 @@ public class GamePanel extends JPanel implements Runnable{
 
      //ENTITY AND OBJEJCTS
      public Player player = new Player(this,keyH);
-     public SuperObject obj[][] = new SuperObject[maxMap][10];
+     public Entity obj[][] = new Entity[maxMap][10];
      public Entity npc[][] = new Entity[maxMap][10];
+     ArrayList<Entity> entityList = new ArrayList<>();
 
 
     public GamePanel(){
@@ -132,26 +136,41 @@ public class GamePanel extends JPanel implements Runnable{
         ui.draw(g2);  
     }
     else if(gameState == tutorialState || gameState == tutorialPauseState){
+
         currentMap = 2;
         tileM.draw(g2);
-        for(int i = 0; i <obj[1].length; i++){
-            if (obj[currentMap][i] != null){
-                obj[currentMap][i].draw(g2, this);
-                }
-        }
-         if(count!= 1){
-            player.worldX = tileSize*25;  
-            player.worldY = tileSize*25;
-            count++;
-            System.out.println(count);
-         }
-        player.draw(g2);
+        //adds entities to list
+        entityList.add(player);
+
         for(int i = 0; i<npc.length; i++){
-            if(npc[currentMap][i]!= null){
-                npc[currentMap][i].draw(g2);
-                
+            if(npc[i] != null){
+                entityList.add(npc[currentMap][i]);
             }
         }
+
+        for (int i = 0; i<obj.length;i++){
+            if(obj[i] != null){
+                entityList.add(obj[currentMap][i]);
+            }
+        }
+        
+    //sort
+    Collections.sort(entityList, new Comparator<Entity>(){
+        public int compare (Entity e1, Entity e2){
+            int result = Integer.compare(e1.worldY, e2.worldY);
+            return result;
+        }
+    });
+
+    //draw entities
+    for (int i = 0; i<entityList.size();i++){
+        entityList.get(i).draw(g2);
+
+    }
+    for (int i = 0; i<entityList.size();i++){
+        entityList.remove(i);
+        
+    }
 
         
 
@@ -173,21 +192,43 @@ public class GamePanel extends JPanel implements Runnable{
             
          //TILE
             tileM.draw(g2); 
-         //OBJECT
-             for(int i = 0; i <obj[1].length; i++){
-                if (obj[currentMap][i] != null){
-                 obj[currentMap][i].draw(g2, this);
+
+            //adds entities to list
+            entityList.add(player);
+
+            for(int i = 0; i<npc.length; i++){
+                if(npc[i] != null){
+                    entityList.add(npc[currentMap][i]);
                 }
-    }
-        //PLAYER
-        player.draw(g2);
-        for(int i = 0; i<npc.length; i++){
-            if(npc[currentMap][i]!= null){
-                npc[currentMap][i].draw(g2);
-                
             }
+
+            for (int i = 0; i<obj.length;i++){
+                if(obj[i] != null){
+                    entityList.add(obj[currentMap][i]);
+                }
+            }
+            
+        //sort
+        Collections.sort(entityList, new Comparator<Entity>(){
+            public int compare (Entity e1, Entity e2){
+                int result = Integer.compare(e1.worldY, e2.worldY);
+                return result;
+            }
+        });
+
+        //draw entities
+        for (int i = 0; i<entityList.size();i++){
+            entityList.get(i).draw(g2);
+
         }
-    
+        for (int i = 0; i<entityList.size();i++){
+            entityList.remove(i);
+            
+        }
+
+
+
+
         //UI
         ui.draw(g2);
 
@@ -207,19 +248,39 @@ public class GamePanel extends JPanel implements Runnable{
             
          //TILE
             tileM.draw(g2); 
-         //OBJECT
-             for(int i = 0; i <obj[1].length; i++){
-                if (obj[currentMap][i] != null){
-                 obj[currentMap][i].draw(g2, this);
-                }
+//adds entities to list
+entityList.add(player);
+
+for(int i = 0; i<npc.length; i++){
+    if(npc[i] != null){
+        entityList.add(npc[currentMap][i]);
     }
-        //PLAYER
-        player.draw(g2);
-        for(int i = 0; i<npc.length; i++){
-            if(npc[currentMap][i]!= null){
-                npc[currentMap][i].draw(g2);
-            }
-        }
+}
+
+for (int i = 0; i<obj.length;i++){
+    if(obj[i] != null){
+        entityList.add(obj[currentMap][i]);
+    }
+}
+
+//sort
+Collections.sort(entityList, new Comparator<Entity>(){
+public int compare (Entity e1, Entity e2){
+    int result = Integer.compare(e1.worldY, e2.worldY);
+    return result;
+}
+});
+
+//draw entities
+for (int i = 0; i<entityList.size();i++){
+entityList.get(i).draw(g2);
+
+}
+for (int i = 0; i<entityList.size();i++){
+entityList.remove(i);
+
+}
+
     
         //UI
         ui.draw(g2);
@@ -239,20 +300,39 @@ public class GamePanel extends JPanel implements Runnable{
             
          //TILE
             tileM.draw(g2); 
-         //OBJECT
-             for(int i = 0; i <obj[1].length; i++){
-                if (obj[currentMap][i] != null){
-                 obj[currentMap][i].draw(g2, this);
-                }
-    }
-        //PLAYER
-        player.draw(g2);
+        //adds entities to list
+        entityList.add(player);
+
         for(int i = 0; i<npc.length; i++){
-            if(npc[currentMap][i]!= null){
-                npc[currentMap][i].draw(g2);
+            if(npc[i] != null){
+                entityList.add(npc[currentMap][i]);
             }
         }
-    
+
+        for (int i = 0; i<obj.length;i++){
+            if(obj[i] != null){
+                entityList.add(obj[currentMap][i]);
+            }
+        }
+        
+    //sort
+    Collections.sort(entityList, new Comparator<Entity>(){
+        public int compare (Entity e1, Entity e2){
+            int result = Integer.compare(e1.worldY, e2.worldY);
+            return result;
+        }
+    });
+
+    //draw entities
+    for (int i = 0; i<entityList.size();i++){
+        entityList.get(i).draw(g2);
+
+    }
+    for (int i = 0; i<entityList.size();i++){
+        entityList.remove(i);
+        
+    }
+
         //UI
         ui.draw(g2);
 
@@ -273,7 +353,7 @@ public class GamePanel extends JPanel implements Runnable{
             g2.setColor(Color.white);
             g2.drawString("Draw Time: " + passed, 10, 400);
             System.out.println("Draw Time: " + passed);
-
+            
         }
         
     }

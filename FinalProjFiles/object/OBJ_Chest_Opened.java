@@ -4,20 +4,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Entity.Entity;
 import Main.GamePanel;
 
-public class OBJ_Chest_Opened extends SuperObject{
-    GamePanel gp;
+public class OBJ_Chest_Opened extends Entity{
     public OBJ_Chest_Opened(GamePanel gp){
+        super(gp);
         name= "Chest_Opened";
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/res/objects/chest_opened.png"));
-            uTool.scaleImage(image,gp.tileSize,gp.tileSize);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        down1 = setup("/res/objects/chest_opened");
+        collision = true;
     }
-    }
+}

@@ -8,6 +8,9 @@ public class EventHandler {
     GamePanel gp;
     EventRect eventRect[][][];
     Entity eventMaster;
+
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
     public EventHandler(GamePanel gp){
         this.gp = gp;
         eventMaster = new Entity(gp);
@@ -44,14 +47,34 @@ public class EventHandler {
         setDialogue();
     }
     public void setDialogue(){
-        eventMaster.dialogues[0][0] = "You fall into a pit!";
+
+            eventMaster.dialogues[0][0] = "You fall into a pit!";
+            eventMaster.dialogues[1][0] = "The water is nice and warm...";
+            eventMaster.dialogues[1][1] = "You recovered all your HP!";
+            
+
     }
 
     public void checkEvent(){
-        if(hit(2,23,21,"up") == true){
-            System.out.println("HIT");
-            damagePit(gp.playDialogueState);
+        int xDistance = Math.abs(gp.player.worldX - previousEventX);
+        int yDistance = Math.abs(gp.player.worldY - previousEventY);
+        int distance = Math.max(xDistance,yDistance);
+        if(distance >gp.tileSize){
+            canTouchEvent = true;
         }
+        if(canTouchEvent){
+            if(hit(0,23,21,"up") == true){
+                System.out.println("HIT");
+                damagePit(gp.playDialogueState);
+            }
+            if(hit(0,21,7,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(0,22,7,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(0,23,7,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(0,24,7,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(0,25,7,"up") == true){healingPool(gp.playDialogueState);}
+        }
+
+
     }
 
     public boolean hit(int map, int col, int row, String reqDirection){
@@ -67,6 +90,9 @@ public class EventHandler {
             if(gp.player.solidArea.intersects(eventRect[map][col][row])){
                 if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")){
                     hit = true;
+
+                    previousEventX = gp.player.worldX;
+                    previousEventY = gp.player.worldY;
                 }
             }
     
@@ -90,5 +116,13 @@ public class EventHandler {
         gp.ui.currentDialogue = "You fall into a pit!";
         eventMaster.startDialogue(eventMaster,0);
         gp.player.life -=1;
+        canTouchEvent = false;
+    }
+    public void healingPool(int gameState){
+        if(gp.keyH.enterPressed == true){
+            gp.gameState = gameState;
+            eventMaster.startDialogue(eventMaster,1);
+            gp.player.life = gp.player.maxLife;
+        }
     }
 }

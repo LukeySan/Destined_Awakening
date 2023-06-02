@@ -73,7 +73,6 @@ public class Player extends Entity{
 
 
     public void getPlayerImage(){
-
         up1 = setup("/res/player/boy_up_1");
         up2 = setup("/res/player/boy_up_2");
         up3 = setup("/res/player/boy_up_3");
@@ -85,17 +84,14 @@ public class Player extends Entity{
         left3 = setup("/res/player/boy_left_3");
         right1 = setup("/res/player/boy_right_1");
         right2 = setup("/res/player/boy_right_2");
-        right3 = setup("/res/player/boy_right_3");
-
-        
+        right3 = setup("/res/player/boy_right_3");        
     }
 
     
 
     public void update(){
         if(keyH.upPressed == true || keyH.downPressed == true || 
-            keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true){
-        
+            keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true){       
                 if(keyH.upPressed == true){
                     direction = "up";
                 }

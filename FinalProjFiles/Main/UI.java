@@ -13,7 +13,6 @@ import java.text.DecimalFormat;
 import Entity.Entity;
 import object.OBJ_Heart;
 import object.OBJ_Key;
-import object.SuperObject;
 
 public class UI {
     
@@ -54,7 +53,7 @@ public class UI {
 
 
         //GUI OBJECTS
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_blank = heart.image3;
@@ -91,10 +90,16 @@ public class UI {
         else if(gp.gameState == gp.playState ||gp.gameState == gp.tutorialState ){
             if(gp.keyH.checkDrawTime == true){
                 String text;
+                int x, y;
 
                 g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
-                text = gp.player.worldX + "";
+                g2.setColor(Color.white);
                 
+
+                //text = gp.player.worldX;
+                x = gp.tileSize*4;
+                y = gp.tileSize*10;
+                g2.drawString("World X: " + gp.player.tempX,x,y);                
         
             }
         if(gameFinished){
