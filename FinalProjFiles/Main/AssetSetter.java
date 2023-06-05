@@ -2,6 +2,7 @@ package Main;
 
 import Entity.NPC_OldMan;
 import Entity.NPC_TutOldMan;
+import Monster.MON_chuchu;
 import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
@@ -93,6 +94,10 @@ public class AssetSetter {
         i++;
         
         mapNum =1;
+        gp.npc[mapNum][i] = new NPC_OldMan(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize*21;
+        gp.npc[mapNum][i].worldY = gp.tileSize*21;
+        i++;
         //Interior map
 
 
@@ -112,8 +117,22 @@ public class AssetSetter {
 
 
     }
+    public void setMonster(){
+        int mapNum = 0;
+        int i = 0;
+        mapNum = 1;
+
+        mapNum = 2;
+
+        mapNum = 3;
+        gp.monster[mapNum][i] = new MON_chuchu(gp);
+        gp.monster[mapNum][i].worldX = gp.tileSize*90;
+        gp.monster[mapNum][i].worldX = gp.tileSize*162;
+        i++;
+
+    }
         
 
 
-    }
+}
 

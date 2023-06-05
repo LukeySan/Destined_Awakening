@@ -75,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
      public Player player = new Player(this,keyH);
      public Entity obj[][] = new Entity[maxMap][10];
      public Entity npc[][] = new Entity[maxMap][10];
+     public Entity monster[][] = new Entity[maxMap][20];
      ArrayList<Entity> entityList = new ArrayList<>();
 
 
@@ -92,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame(){
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setMonster();
         playMusic(5);
         gameState = titleState;
 
@@ -153,14 +155,24 @@ public class GamePanel extends JPanel implements Runnable{
                 entityList.add(obj[currentMap][i]);
             }
         }
-        
+        for (int i = 0; i<monster.length;i++){
+            if(monster[currentMap][i] != null){
+                entityList.add(monster[currentMap][i]);
+            }
+        }
     //sort
-    Collections.sort(entityList, new Comparator<Entity>(){
+        /*for(int i = 0;i<entityList.size(); i++){
+            if(entityList.get(i).equals(null)){
+                System.out.println("null object at element" + currentMap + i);
+            }
+        }*/
+
+    /*Collections.sort(entityList, new Comparator<Entity>(){
         public int compare (Entity e1, Entity e2){
             int result = Integer.compare(e1.worldY, e2.worldY);
             return result;
         }
-    });
+    });*/
 
     //draw entities
     for (int i = 0; i<entityList.size();i++){
@@ -207,35 +219,31 @@ public class GamePanel extends JPanel implements Runnable{
                     entityList.add(obj[currentMap][i]);
                 }
             }
+            for (int i = 0; i<monster.length;i++){
+                if(monster[currentMap][i] != null){
+                    entityList.add(monster[currentMap][i]);
+                }
+            }
             
         //sort
-        Collections.sort(entityList, new Comparator<Entity>(){
+        /*Collections.sort(entityList, new Comparator<Entity>(){
             public int compare (Entity e1, Entity e2){
                 int result = Integer.compare(e1.worldY, e2.worldY);
                 return result;
             }
-        });
+        });*/
+
 
         //draw entities
         for (int i = 0; i<entityList.size();i++){
             entityList.get(i).draw(g2);
-
         }
         for (int i = 0; i<entityList.size();i++){
             entityList.remove(i);
             
         }
-
-
-
-
         //UI
         ui.draw(g2);
-
-        
-
-        
-
 
         if (g2 != null) {
             g2.dispose();
@@ -303,6 +311,12 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i<npc.length; i++){
                 if(npc[currentMap][i]!=null){
                     npc[currentMap][i].update();
+                }
+            }
+
+            for(int i = 0; i<monster.length ; i++){
+                if(monster[currentMap][i]!=null){
+                    monster[currentMap][i].update();
                 }
             }
         }

@@ -40,7 +40,9 @@ public class Entity {
     public Entity(GamePanel gp){
         this.gp = gp;
     }
-
+    public String getName(){
+        return name;
+    }
     public void setAction(){}
     public void speak(){  }
     public void facePlayer(){
@@ -87,6 +89,9 @@ public class Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkEntity(this,gp.npc);
+        gp.cChecker.checkEntity(this,gp.monster);
+
         gp.cChecker.checkPlayer(this);
 
         //IF COLLISION IS FALSE, PLAYER CAN MOVE
