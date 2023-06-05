@@ -24,7 +24,7 @@ public class AssetSetter {
         int i =0;
 
 
-            //MAIN MAP OBJECT PLACEMENT
+            //TEST MAIN MAP OBJECT PLACEMENT
             gp.obj[mapNum][i] = new OBJ_Key(gp);
             gp.obj[mapNum][i].worldX= 23 * gp.tileSize;
             gp.obj[mapNum][i].worldY = 7 * gp.tileSize;
@@ -73,6 +73,10 @@ public class AssetSetter {
             gp.obj[mapNum][0].worldY = 4*gp.tileSize;
             i++;
 
+            //REAL MAIN MAP OBJECT PLACEMENT
+            mapNum = 3;
+
+
 
 
         }
@@ -86,18 +90,25 @@ public class AssetSetter {
         gp.npc[mapNum][i] = new NPC_OldMan(gp);
         gp.npc[mapNum][i].worldX = gp.tileSize*21;
         gp.npc[mapNum][i].worldY = gp.tileSize*21;
-
+        i++;
         
-        mapNum++;
+        mapNum =1;
         //Interior map
 
 
-        i++;
         mapNum=2;
         //Tutorial Map
         gp.npc[mapNum][i] = new NPC_TutOldMan(gp);
         gp.npc[mapNum][i].worldX = gp.tileSize*26;
         gp.npc[mapNum][i].worldY = gp.tileSize*26;
+        i++;
+
+        //REAL MAIN MAP OBJECT PLACEMENT
+        mapNum = 3;
+        gp.npc[mapNum][i] = new NPC_OldMan(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize*88;
+        gp.npc[mapNum][i].worldY = gp.tileSize*160;
+        i++;
 
 
     }

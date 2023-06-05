@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable{
      public final int screenHeight = tileSize * maxScreenRow;         //576 pixels
 
      //WORLD SETTINGS
-     public final int maxWorldCol = 50;//50
-     public final int maxWorldRow= 50;//50
+     public final int maxWorldCol = 250;//50
+     public final int maxWorldRow= 250;//50
      public final int worldWidth = tileSize * maxWorldCol;
      public final int worldHeight = tileSize * maxWorldRow;
      public final int maxMap = 10;
@@ -135,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
     if(gameState == titleState){
         ui.draw(g2);  
     }
-    else if(gameState == tutorialState || gameState == tutorialPauseState){
+     if(gameState == tutorialState || gameState == tutorialPauseState|| gameState == tutorialDialogueState){
 
         currentMap = 2;
         tileM.draw(g2);
@@ -143,13 +143,13 @@ public class GamePanel extends JPanel implements Runnable{
         entityList.add(player);
 
         for(int i = 0; i<npc.length; i++){
-            if(npc[i] != null){
+            if(npc[currentMap][i] != null){
                 entityList.add(npc[currentMap][i]);
             }
         }
 
         for (int i = 0; i<obj.length;i++){
-            if(obj[i] != null){
+            if(obj[currentMap][i] != null){
                 entityList.add(obj[currentMap][i]);
             }
         }
@@ -185,9 +185,9 @@ public class GamePanel extends JPanel implements Runnable{
     
     
     //OTHERS
-    else if (gameState == playState || gameState == playPauseState){
+    if (gameState == playState || gameState == playPauseState || gameState == playDialogueState){
             
-            currentMap = 0;
+            currentMap = 3;
             
             
          //TILE
@@ -197,13 +197,13 @@ public class GamePanel extends JPanel implements Runnable{
             entityList.add(player);
 
             for(int i = 0; i<npc.length; i++){
-                if(npc[i] != null){
+                if(npc[currentMap][i] != null){
                     entityList.add(npc[currentMap][i]);
                 }
             }
 
             for (int i = 0; i<obj.length;i++){
-                if(obj[i] != null){
+                if(obj[currentMap][i] != null){
                     entityList.add(obj[currentMap][i]);
                 }
             }
@@ -242,109 +242,8 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    else if(gameState == tutorialDialogueState ){
-        currentMap = 2;
-            
-            
-         //TILE
-            tileM.draw(g2); 
-//adds entities to list
-entityList.add(player);
-
-for(int i = 0; i<npc.length; i++){
-    if(npc[i] != null){
-        entityList.add(npc[currentMap][i]);
-    }
-}
-
-for (int i = 0; i<obj.length;i++){
-    if(obj[i] != null){
-        entityList.add(obj[currentMap][i]);
-    }
-}
-
-//sort
-Collections.sort(entityList, new Comparator<Entity>(){
-public int compare (Entity e1, Entity e2){
-    int result = Integer.compare(e1.worldY, e2.worldY);
-    return result;
-}
-});
-
-//draw entities
-for (int i = 0; i<entityList.size();i++){
-entityList.get(i).draw(g2);
-
-}
-for (int i = 0; i<entityList.size();i++){
-entityList.remove(i);
-
-}
-
-    
-        //UI
-        ui.draw(g2);
-
-        
-
-        
-
-
-        if (g2 != null) {
-            g2.dispose();
-        }
-    }
-    else if(gameState == playDialogueState ){
-        currentMap = 0;
-            
-            
-         //TILE
-            tileM.draw(g2); 
-        //adds entities to list
-        entityList.add(player);
-
-        for(int i = 0; i<npc.length; i++){
-            if(npc[i] != null){
-                entityList.add(npc[currentMap][i]);
-            }
-        }
-
-        for (int i = 0; i<obj.length;i++){
-            if(obj[i] != null){
-                entityList.add(obj[currentMap][i]);
-            }
-        }
-        
-    //sort
-    Collections.sort(entityList, new Comparator<Entity>(){
-        public int compare (Entity e1, Entity e2){
-            int result = Integer.compare(e1.worldY, e2.worldY);
-            return result;
-        }
-    });
-
-    //draw entities
-    for (int i = 0; i<entityList.size();i++){
-        entityList.get(i).draw(g2);
-
-    }
-    for (int i = 0; i<entityList.size();i++){
-        entityList.remove(i);
-        
-    }
-
-        //UI
-        ui.draw(g2);
-
-        
-
-        
-
-
-        if (g2 != null) {
-            g2.dispose();
-        }
-    }
+   
+   
 
     //DEBUG
         if(keyH.checkDrawTime == true){
@@ -429,92 +328,5 @@ entityList.remove(i);
         se.setFile(i);
         se.play();
     }
-        /*public void drawToScreen(){
-        Graphics g = getGraphics();
-
-        g.drawImage(tempScreen,0,0,screenWidth2,screenHeight2,null);
-        g.dispose();
-    }
-    
-    public void drawToTempScreen(){
-        
-        //DEBUG
-        long  drawStart = 0;
-        if(keyH.checkDrawTime){
-            drawStart = System.nanoTime();
-
-        }
-
-        //TILE
-        tileM.draw(g2); 
-
-        //OBJECT
-        for(int i = 0; i <obj.length; i++){
-            if (obj[i] != null){
-                obj[i].draw(g2, this);
-            }
-        }
-
-        //PLAYER
-        player.draw(g2);
-
-        //UI
-        ui.draw(g2);
-
-        //DEBUG
-        if(keyH.checkDrawTime == true){
-            long drawEnd = System.nanoTime();
-            long passed = drawEnd - drawStart;
-            g2.setColor(Color.white);
-            g2.drawString("Draw Time: " + passed, 10, 400);
-            System.out.println("Draw Time: " + passed);
-
-        }
-
-        g2.dispose();
-        
-    }*/
-    /*  public void run() {
-        // TODO Auto-generated method stub
-
-        double drawInterval = 1000000000/FPS; //0.01666 seconds
-        double nextDrawTime = System.nanoTime() + drawInterval;
-
-        while(gameThread!= null){
-
-
-            update();
-
-            repaint();
-
-
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime/1000000;
-
-
-                if(remainingTime < 0 ){
-                    remainingTime = 0;
-                }
-                Thread.sleep((long) remainingTime);
-
-                nextDrawTime+=drawInterval;
-
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        int i = 1;
-        while(gameThread != null){
-            if(i == 60){
-                i = 1;
-            }
-            System.out.println(i);
-            i++;
-
-        }
-        //throw new UnsupportedOperationException("Unimplemented method 'run'");
-    }*/
-    
+     
 }

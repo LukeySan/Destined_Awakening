@@ -47,15 +47,21 @@ public class Player extends Entity{
         System.out.println("DEFAULT VALUES SET");
         switch (GamePanel.gameState){
             case 1:
-            worldX = gp.tileSize*23;
-            worldY = gp.tileSize*21;
-            System.out.println("MAIN VALUES SET");
+            worldX = gp.tileSize*94;
+            worldY = gp.tileSize*164;
+            System.out.println("big map position loaded!");
             break;
 
             case 2:
             worldX = gp.tileSize*24;
             worldY = gp.tileSize*21;
             System.out.println("TUTORIAL VALUES SET");
+            break;
+
+            case 3:
+            worldX = gp.tileSize*94;
+            worldY = gp.tileSize*164;
+            System.out.println("big map position loaded!");
             break;
 
         }
@@ -171,6 +177,10 @@ public class Player extends Entity{
             else if(gp.keyH.enterPressed && gp.currentMap == 2){
                 gp.npc[gp.currentMap][i].speak();
             }
+            else if(gp.keyH.enterPressed && gp.currentMap == 3){
+                gp.npc[gp.currentMap][i].speak();
+            }
+            
         }
 
     }

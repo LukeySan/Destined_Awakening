@@ -28,6 +28,7 @@ public class TileManager {
         loadMap("/res/maps/world01.txt",0);
         loadMap(("/res/maps/interior01.txt"), 1);
         loadMap("/res/maps/tutorial01.txt",2);
+        loadMap("/res/maps/realworld01.txt",3);
     }
 
     public void getTileImage(){

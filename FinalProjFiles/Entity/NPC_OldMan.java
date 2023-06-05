@@ -41,16 +41,17 @@ public class NPC_OldMan extends Entity{
 
     public void setDialogue(){
 
-        dialogues[0][0] = "Hello lad";
-        dialogues[0][1] = "So you've come to this island to find the treasure?";
-        dialogues[0][2] = "I used to be a great wizard but now... \nI'm a bit too old for taking an adventure.";
-        dialogues[0][3] = "Well, good luck on you.";
+        dialogues[0][0] = "So you've finally awaken lad..";
+        dialogues[0][1] = "You are the chosen one who can defeat the evil\nknight!";
+        dialogues[0][2] = "You can go to his lair and fight him now, but you\nare quite weak at the moment.";
+        dialogues[0][3] = "I suggest you go and train by fighting weaker\nmonsters first until you feel you are ready to fight\nthe evil knight.";
+        dialogues[0][4] = "Now go young one! I wish you luck...";
 
-        dialogues[1][0] = "If you get tired you can rest at the water";
-        dialogues[1][1] = "However, the monsters reappear if you rest. \nI don't know why but that's how it works.";
-        dialogues[1][2] = "In any case, don't push yourself too hard.";
+        dialogues[1][0] = "You can go to his lair and fight him now, but you\nare quite weak at the moment.";
+        dialogues[1][1] = "I suggest you go and train by fighting weaker\nmonsters first until you feel you are ready to fight\nthe evil knight.";
+        dialogues[1][2] = "Now go young one! I wish you luck...";
 
-        dialogues[2][0]= "I wonder how to open that door...";
+        
         
 
 
@@ -84,6 +85,10 @@ public class NPC_OldMan extends Entity{
     public void speak(){
         facePlayer();
         startDialogue(this, dialogueSet);
+
+        if(dialogues[dialogueSet][0]==null){
+            dialogueSet--;
+        }
     }
 
     

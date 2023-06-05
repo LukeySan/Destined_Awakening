@@ -62,14 +62,17 @@ public class Entity {
     }
     public void startDialogue(Entity entity, int setNum){
 
-        if(gp.currentMap == 0){
+        if(gp.currentMap == 0 || gp.currentMap == 3){
             gp.gameState = gp.playDialogueState;
+            
+
         }
         else if (gp.currentMap == 2){
             gp.gameState = gp.tutorialDialogueState;
         }
         gp.ui.npc = entity;
         dialogueSet = setNum;
+
 
 
 

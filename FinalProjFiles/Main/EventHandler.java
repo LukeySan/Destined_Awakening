@@ -63,15 +63,15 @@ public class EventHandler {
             canTouchEvent = true;
         }
         if(canTouchEvent){
-            if(hit(0,23,21,"up") == true){
+            /*if(hit(0,23,21,"up") == true){
                 System.out.println("HIT");
                 damagePit(gp.playDialogueState);
-            }
-            if(hit(0,21,7,"up") == true){healingPool(gp.playDialogueState);}
+            }*/
+            /*if(hit(0,21,7,"up") == true){healingPool(gp.playDialogueState);}
             if(hit(0,22,7,"up") == true){healingPool(gp.playDialogueState);}
             if(hit(0,23,7,"up") == true){healingPool(gp.playDialogueState);}
             if(hit(0,24,7,"up") == true){healingPool(gp.playDialogueState);}
-            if(hit(0,25,7,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(0,25,7,"up") == true){healingPool(gp.playDialogueState);}*/
         }
 
 

@@ -142,7 +142,7 @@ public class UI {
             g2.setFont(earthbound.deriveFont(55F));
             g2.setColor(Color.WHITE);
             g2.drawImage(keyImage,gp.tileSize/2, gp.tileSize*10,gp.tileSize,gp.tileSize,null);
-            g2.drawString("x "+gp.player.hasKey,74,530);
+            //g2.drawString("x "+gp.player.hasKey,74,530);
             /*The Y value of the drawString actually indicates the bottom of the text, rather than the top like most objects. */
             
             drawPlayerLife();
@@ -153,7 +153,7 @@ public class UI {
             double elapsedTime = (currentTime - lastFrameTime) / 1_000_000_000.0; // Convert to seconds
             lastFrameTime = currentTime;
             playTime += elapsedTime;
-            g2.drawString("Time:"+dFormat.format(playTime),gp.tileSize*14,65);
+            //g2.drawString("Time:"+dFormat.format(playTime),gp.tileSize*14,65);
 
     
             //MESSAGE
@@ -283,9 +283,12 @@ public class UI {
         g2.setFont(earthbound.deriveFont(Font.PLAIN,35F));
         x+= gp.tileSize;
         y+=gp.tileSize;
-
         if(npc.dialogues[npc.dialogueSet][npc.dialogueIndex]!= null){
+
             currentDialogue = npc.dialogues[npc.dialogueSet][npc.dialogueIndex];
+            
+            
+
 
             if(gp.keyH.enterPressed == true){
                 if(gp.gameState == gp.tutorialDialogueState){
@@ -300,7 +303,10 @@ public class UI {
 
         }
         else{
+            
             npc.dialogueIndex = 0;
+            npc.dialogueSet++;
+
 
             if(gp.gameState == gp.tutorialDialogueState){
                 gp.gameState = gp.tutorialState;
@@ -429,7 +435,7 @@ public class UI {
         
         //Title name
         g2.setFont(title.deriveFont(Font.BOLD,96F));
-        String text = "TITLE SCREEN";
+        String text = "DESTINED AWAKENING";
         int x = getXforCenteredText(text);
         int y = gp.tileSize*3;
 
