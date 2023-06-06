@@ -11,6 +11,7 @@ public class EventHandler {
 
     int previousEventX, previousEventY;
     boolean canTouchEvent = true;
+    public boolean uiDialogue = false;
     public EventHandler(GamePanel gp){
         this.gp = gp;
         eventMaster = new Entity(gp);
@@ -51,6 +52,7 @@ public class EventHandler {
             eventMaster.dialogues[0][0] = "You fall into a pit!";
             eventMaster.dialogues[1][0] = "The water is nice and warm...";
             eventMaster.dialogues[1][1] = "You recovered all your HP!";
+            eventMaster.dialogues[1][1] = "All monsters have respawned!";
             
 
     }
@@ -72,6 +74,29 @@ public class EventHandler {
             if(hit(0,23,7,"up") == true){healingPool(gp.playDialogueState);}
             if(hit(0,24,7,"up") == true){healingPool(gp.playDialogueState);}
             if(hit(0,25,7,"up") == true){healingPool(gp.playDialogueState);}*/
+            if(hit(3,91,170,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,92,170,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,90,171,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,90,171,"right") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,93,171,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,94,171,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,95,172,"left") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,95,173,"left") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,95,174,"left") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,89,172,"right") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,89,173,"right") == true){healingPool(gp.playDialogueState);}
+
+
+            if(hit(3,137,190,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,138,190,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,139,190,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,140,190,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,136,191,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,143,192,"down") == true){healingPool(gp.playDialogueState);}
+
+
+
+
         }
 
 
@@ -120,9 +145,16 @@ public class EventHandler {
     }
     public void healingPool(int gameState){
         if(gp.keyH.enterPressed == true){
+            
             gp.gameState = gameState;
+            gp.player.attackCanceled= true;
+            gp.playSE(12);
             eventMaster.startDialogue(eventMaster,1);
             gp.player.life = gp.player.maxLife;
+            gp.aSetter.setMonster();
+            gp.aSetter.setMonster2();
+            gp.aSetter.setMonster3();
+
         }
     }
 }

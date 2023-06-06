@@ -13,6 +13,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import Main.KeyHandler;
+import ai.PathFinder;
 import object.SuperObject;
 import tile.TileManager;
 import Entity.Entity;
@@ -45,6 +46,8 @@ public class GamePanel extends JPanel implements Runnable{
      public static int tutorialPauseState = 4;
      public final int playDialogueState =  5;
      public final int tutorialDialogueState = 6;
+     public final int characterState = 7;
+     public final int gameOverState = 8;
 
 
      //FOR FULL SCREEN
@@ -58,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable{
      int FPS =  60;
 
     //SYSTEM
-     TileManager tileM = new TileManager(this);
+     public TileManager tileM = new TileManager(this);
      public KeyHandler keyH = new KeyHandler(this);
      Sound se = new Sound();
      Sound music = new Sound();
@@ -66,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
      public AssetSetter aSetter = new AssetSetter(this);
      public UI ui = new UI(this);
      public EventHandler eHandler = new EventHandler(this);
+     public PathFinder pFinder = new PathFinder(this);
      
      Thread gameThread; 
      int count = 0;
@@ -73,9 +77,12 @@ public class GamePanel extends JPanel implements Runnable{
 
      //ENTITY AND OBJEJCTS
      public Player player = new Player(this,keyH);
-     public Entity obj[][] = new Entity[maxMap][10];
-     public Entity npc[][] = new Entity[maxMap][10];
+     public Entity obj[][] = new Entity[maxMap][20];
+     public Entity npc[][] = new Entity[maxMap][20];
      public Entity monster[][] = new Entity[maxMap][20];
+     public Entity monster2[][] = new Entity[maxMap][20];
+     public Entity monster3[][] = new Entity[maxMap][20];
+
      ArrayList<Entity> entityList = new ArrayList<>();
 
 
@@ -92,8 +99,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
         aSetter.setObject();
-        aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setMonster2();
+        aSetter.setMonster3();
+
+        aSetter.setNPC();
         playMusic(5);
         gameState = titleState;
 
@@ -103,6 +113,7 @@ public class GamePanel extends JPanel implements Runnable{
         //setFullScreen();
     }
 
+    //UNUSED
     public void setFullScreen(){
 
         //GET LOCAL SCREEN DEVICE
@@ -115,13 +126,123 @@ public class GamePanel extends JPanel implements Runnable{
         screenHeight2 = main.window.getHeight();
     }
 
+    public void retry(){
+        player.setDefaultPositions();
+        player.restoreLife();
+        aSetter.setNPC();
+        aSetter.setMonster();
+        aSetter.setMonster2();
+        aSetter.setMonster3();
+
+    }
+
+    public void restart(){
+        player.setDefaultValues();
+        player.setDefaultPositions();
+        player.restoreLife();
+        aSetter.setObject();
+        aSetter.setMonster();
+        aSetter.setMonster2();
+        aSetter.setMonster3();
+        aSetter.setNPC();
+
+    }
+
     public void startGameThread() {
 
         gameThread = new Thread(this);
         gameThread.start(); 
 
     }
-    public void paintComponent(Graphics g){
+   
+    public void run(){
+
+        double drawInterval = 1000000000/FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+        long timer = 0;
+        int drawCount = 0;
+
+        while(gameThread!= null){
+
+            currentTime = System.nanoTime();
+
+            delta+= (currentTime - lastTime) / drawInterval;
+            timer+= (currentTime - lastTime);
+            lastTime = currentTime;
+
+            if(delta>= 1){
+                update();
+                repaint(); //For when running on mac
+                paintComponent(g2); //For when running on mac
+                //drawToTempScreen();//draw everything to the buffered image
+                //drawToScreen();//draw the buffered image to the screen
+                delta--;
+                drawCount++;
+            }
+
+            if(timer >= 1000000000){
+                System.out.println("FPS" + drawCount);
+                //System.out.println(player.speed);
+                drawCount = 0;
+                timer = 0;
+            }
+
+           
+        }
+    }
+
+    public void update(){
+        if(gameState == playState ||gameState == tutorialState ){
+            //Update player position
+            player.update();
+
+            //Update NPC position
+            for(int i = 0; i<npc.length; i++){
+                if(npc[currentMap][i]!=null){
+                    npc[currentMap][i].update();
+                }
+            }
+
+            for(int i = 0; i<monster.length ; i++){
+                if(monster[currentMap][i]!=null){
+                    if(monster[currentMap][i].alive == true && monster[currentMap][i].dying == false){
+                        monster[currentMap][i].update();
+                    }
+                    if(monster[currentMap][i].alive == false){
+                        monster[currentMap][i] = null;
+                }
+            }
+        }
+        for(int i = 0; i<monster2.length ; i++){
+            if(monster2[currentMap][i]!=null){
+                if(monster2[currentMap][i].alive == true && monster2[currentMap][i].dying == false){
+                    monster2[currentMap][i].update();
+                }
+                if(monster2[currentMap][i].alive == false){
+                    monster2[currentMap][i] = null;
+                }
+            }
+        }   
+
+        for(int i = 0; i<monster3.length ; i++){
+            if(monster3[currentMap][i]!=null){
+                if(monster3[currentMap][i].alive == true && monster3[currentMap][i].dying == false){
+                    monster3[currentMap][i].update();
+                }
+                if(monster3[currentMap][i].alive == false){
+                    monster3[currentMap][i] = null;
+            }
+        }
+    }
+        if(gameState == playPauseState || gameState == tutorialPauseState){
+
+        }
+
+        } 
+    }
+ public void paintComponent(Graphics g){
         
 
         super.paintComponent(g);
@@ -197,10 +318,11 @@ public class GamePanel extends JPanel implements Runnable{
     
     
     //OTHERS
-    if (gameState == playState || gameState == playPauseState || gameState == playDialogueState){
+    if (gameState == playState || gameState == playPauseState || gameState == playDialogueState || gameState == characterState || gameState == gameOverState){
             
             currentMap = 3;
             
+
             
          //TILE
             tileM.draw(g2); 
@@ -219,12 +341,23 @@ public class GamePanel extends JPanel implements Runnable{
                     entityList.add(obj[currentMap][i]);
                 }
             }
+            
             for (int i = 0; i<monster.length;i++){
                 if(monster[currentMap][i] != null){
                     entityList.add(monster[currentMap][i]);
                 }
             }
-            
+            for (int i = 0; i<monster2.length;i++){
+                if(monster2[currentMap][i] != null){
+                    entityList.add(monster2[currentMap][i]);
+                }
+            }
+            for (int i = 0; i<monster3.length;i++){
+                if(monster3[currentMap][i] != null){
+                    entityList.add(monster3[currentMap][i]);
+                }
+            }
+        
         //sort
         /*Collections.sort(entityList, new Comparator<Entity>(){
             public int compare (Entity e1, Entity e2){
@@ -233,15 +366,13 @@ public class GamePanel extends JPanel implements Runnable{
             }
         });*/
 
-
         //draw entities
         for (int i = 0; i<entityList.size();i++){
-            entityList.get(i).draw(g2);
-        }
-        for (int i = 0; i<entityList.size();i++){
-            entityList.remove(i);
             
+                entityList.get(i).draw(g2);  
         }
+        entityList.clear();
+
         //UI
         ui.draw(g2);
 
@@ -264,68 +395,6 @@ public class GamePanel extends JPanel implements Runnable{
         }
         
     }
-    public void run(){
-
-        double drawInterval = 1000000000/FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-        long timer = 0;
-        int drawCount = 0;
-
-        while(gameThread!= null){
-
-            currentTime = System.nanoTime();
-
-            delta+= (currentTime - lastTime) / drawInterval;
-            timer+= (currentTime - lastTime);
-            lastTime = currentTime;
-
-            if(delta>= 1){
-                update();
-                repaint(); //For when running on mac
-                paintComponent(g2); //For when running on mac
-                //drawToTempScreen();//draw everything to the buffered image
-                //drawToScreen();//draw the buffered image to the screen
-                delta--;
-                drawCount++;
-            }
-
-            if(timer >= 1000000000){
-                System.out.println("FPS" + drawCount);
-                //System.out.println(player.speed);
-                drawCount = 0;
-                timer = 0;
-            }
-
-           
-        }
-    }
-
-    public void update(){
-        if(gameState == playState ||gameState == tutorialState ){
-            //Update player position
-            player.update();
-
-            //Update NPC position
-            for(int i = 0; i<npc.length; i++){
-                if(npc[currentMap][i]!=null){
-                    npc[currentMap][i].update();
-                }
-            }
-
-            for(int i = 0; i<monster.length ; i++){
-                if(monster[currentMap][i]!=null){
-                    monster[currentMap][i].update();
-                }
-            }
-        }
-        if(gameState == playPauseState || gameState == tutorialPauseState){
-
-        }
-
-    } 
-
     
     public void playMusic(int i ){
         music.setFile(i);

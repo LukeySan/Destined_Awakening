@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import Entity.Entity;
 import object.OBJ_Heart;
@@ -21,8 +22,10 @@ public class UI {
     Font arial_40, arial_80B, earthbound,title;
     BufferedImage keyImage, heart_full , heart_half , heart_blank;
     public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
+    //public String message = "";
+    //int messageCounter = 0;
+    ArrayList<String> message = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
     public boolean gameFinished = false;
     private long lastFrameTime;
     public int commandNum = 0;
@@ -70,9 +73,9 @@ public class UI {
         
     }
 
-    public void showMessage(String text){
-        message = text;
-        messageOn = true;
+    public void addMessage(String text){
+        message.add(text);
+        messageCounter.add(0);
     }
 
     //Don't instantiate the class in the draw method, always do it in the constructor.
@@ -104,7 +107,7 @@ public class UI {
             }
         if(gameFinished){
             
-            g2.setFont(earthbound.deriveFont(70F));
+            /*g2.setFont(earthbound.deriveFont(70F));
             g2.setColor(Color.white);
 
             String text;
@@ -134,7 +137,7 @@ public class UI {
               y = gp.screenHeight/2 + (gp.tileSize*2)-100;
               g2.drawString(text, x,y);
 
-              gp.gameThread = null;//STOPS THE THREAD/STOPS GAME
+              gp.gameThread = null;//STOPS THE THREAD/STOPS GAME*/
  
         }
 
@@ -146,6 +149,7 @@ public class UI {
             /*The Y value of the drawString actually indicates the bottom of the text, rather than the top like most objects. */
             
             drawPlayerLife();
+            drawMessage();
 
             //TIME
             //playTime += (double)1/60;
@@ -157,18 +161,7 @@ public class UI {
 
     
             //MESSAGE
-            if(messageOn){
-                g2.setFont(g2.getFont().deriveFont(30F));
-                g2.drawString(message,gp.tileSize/2,gp.tileSize*5);
-                
-                messageCounter++;
-                //shows for 2 seconds bc counter increases by 60 since fps is 60
-                if(messageCounter > 120){
-                    messageCounter = 0;
-                    messageOn = false;
-    
-                }
-            }
+            
             g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
             String text = "";
             int x;
@@ -202,7 +195,7 @@ public class UI {
         y = gp.tileSize+120;
         g2.drawString(text,x,y);
 
-        text = "       Enter: SELECT/INTERACT";
+        text = "       Enter: SELECT/ACTION";
         x = gp.tileSize;
         y = gp.tileSize+150;
         g2.drawString(text,x,y);
@@ -235,7 +228,86 @@ public class UI {
             drawDialogueScreen();
 
         }
+
+        if(gp.gameState == gp.characterState){
+            drawCharacterScreen();
+        }
+
+        if(gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
+        }
         
+    }
+
+    public void drawGameOverScreen(){
+
+            g2.setColor(new Color(0,0,0,150));
+            g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+            int x;
+            int y;
+            String text;
+            g2.setFont(earthbound.deriveFont(Font.BOLD,110F));
+
+            text = "Game Over";
+
+            g2.setColor(Color.black);
+            //Shadow Text
+            x = getXforCenteredText(text);
+            y = gp.tileSize*4;
+            g2.drawString(text,x,y);
+            //Main text
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x-4,y-4);
+
+            //Retry
+            g2.setFont(earthbound.deriveFont(Font.BOLD,50F));
+            text = "Retry";
+            x = getXforCenteredText(text);
+            y+= gp.tileSize*4;
+            g2.drawString(text,x,y);
+            if(commandNum == 0){
+                g2.drawString(">",x-40,y);
+            }
+
+            //Back to Main menu
+            text = "Quit";
+            x = getXforCenteredText(text);
+            y+=gp.tileSize*2;
+            g2.drawString(text,x,y);
+            if(commandNum == 1){
+                g2.drawString(">",x-40,y);
+            }
+
+
+
+    }
+    public void drawMessage(){
+        int messageX = gp.tileSize;
+        int messageY = gp.tileSize*4;
+        g2.setFont(earthbound.deriveFont(Font.BOLD,32F));
+
+        for(int i = 0; i<message.size(); i++ ){
+
+            if(message.get(i) != null){
+                g2.setColor(Color.BLACK);//shadow text
+                g2.drawString(message.get(i),messageX+2,messageY+2);//shadow text
+                g2.setColor(Color.WHITE);
+                g2.drawString(message.get(i),messageX,messageY);
+            }
+
+            int counter = messageCounter.get(i) + 1; //messageCounter++
+            messageCounter.set(i, counter); //set the countter to the array
+            messageY += 50;
+
+            if(messageCounter.get(i) >180) {
+                message.remove(i);
+                messageCounter.remove(i);
+            }
+
+
+        }
+
     }
 
     public void drawPlayerLife(){
@@ -325,7 +397,68 @@ public class UI {
         }
         
     }
+    public void drawCharacterScreen(){
+        //Create a fram
+        final int frameX = gp.tileSize*2;
+        final int frameY = gp.tileSize;
+        final int frameWidth = gp.tileSize *5;
+        final int frameHeight = gp.tileSize*10;
+        drawSubWindow(frameX,frameY,frameWidth,frameHeight);
 
+        //text
+        g2.setColor(Color.white);
+        g2.setFont(earthbound.deriveFont(Font.PLAIN,35F));
+
+        int textX = frameX + 20;
+        int textY = frameY + gp.tileSize;
+        final int lineHeight = 50;
+
+        //Names
+        g2.drawString("Level", textX, textY);
+        textY+= lineHeight;
+        g2.drawString("EXP",textX,textY);
+        textY+= lineHeight;
+        g2.drawString("Next Level",textX,textY);
+        textY+= lineHeight;
+        g2.drawString("HP",textX,textY);
+        textY+= lineHeight;
+        g2.drawString("Strength",textX,textY);
+        textY+= lineHeight;
+
+        //Values
+        int tailX = (frameX + frameWidth) - 30;
+        //Reset textY
+        textY = frameY + gp.tileSize;
+        String value;
+
+        value = String.valueOf(gp.player.level);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+       value = String.valueOf(gp.player.exp);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.nextLevelExp);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.life) + "/" + String.valueOf(gp.player.maxLife) ;
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.strength);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        
+
+    }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c= new Color(0,0,0,200);
         g2.setColor(c);
@@ -378,48 +511,49 @@ public class UI {
 
 
             
-        if(gp.gameState == gp.playPauseState){
-            text = "SAVE GAME";
-            x = getXforCenteredText(text);
-            y += gp.tileSize*2;
-            g2.drawString(text,x,y);
-        }
-        if(gp.gameState == gp.playPauseState && playPauseCommandNum == 2){
-            g2.drawString(">",x-gp.tileSize*1,y);
-        }
-
-        g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
         
-        text = "CONTROLS:";
-        x = gp.tileSize*2;
-        y = gp.tileSize;
-        g2.drawString(text,x,y);
+             g2.setFont(earthbound.deriveFont(Font.BOLD,20F));
 
-        text = "    W: UP";
-        x = gp.tileSize*2;
-        y = gp.tileSize+30;
-        g2.drawString(text,x,y);
-
-
-        text = "    A: LEFT";
-        x = gp.tileSize*2;
-        y = gp.tileSize+60;
-        g2.drawString(text,x,y);
-
-        text = "    S: DOWN";
-        x = gp.tileSize*2;
-        y = gp.tileSize+90;
-        g2.drawString(text,x,y);
-
-        text = "    D: RIGHT";
-        x = gp.tileSize*2;
-        y = gp.tileSize+120;
-        g2.drawString(text,x,y);
-
-        text = "       Enter: SELECT/INTERACT";
-        x = gp.tileSize;
-        y = gp.tileSize+150;
-        g2.drawString(text,x,y);
+            text = "CONTROLS:";
+            x = gp.tileSize*2;
+            y = gp.tileSize;
+            g2.drawString(text,x,y);
+    
+            text = "    W: UP";
+            x = gp.tileSize*2;
+            y = gp.tileSize+30;
+            g2.drawString(text,x,y);
+    
+    
+            text = "    A: LEFT";
+            x = gp.tileSize*2;
+            y = gp.tileSize+60;
+            g2.drawString(text,x,y);
+    
+            text = "    S: DOWN";
+            x = gp.tileSize*2;
+            y = gp.tileSize+90;
+            g2.drawString(text,x,y);
+    
+            text = "    D: RIGHT";
+            x = gp.tileSize*2;
+            y = gp.tileSize+120;
+            g2.drawString(text,x,y);
+    
+            text = "    C: CHARACTER PAGE";
+            x = gp.tileSize*2;
+            y = gp.tileSize+150;
+            g2.drawString(text,x,y);
+    
+            text = "    P: PAUSE";
+            x = gp.tileSize*2;
+            y = gp.tileSize+180;
+            g2.drawString(text,x,y);
+    
+            text = "       Enter: SELECT/ACTION";
+            x = 15;
+            y = gp.tileSize+210;
+            g2.drawString(text,x,y);
 
         
 
@@ -475,9 +609,19 @@ public class UI {
         y = gp.tileSize+120;
         g2.drawString(text,x,y);
 
-        text = "       Enter: SELECT/INTERACT";
-        x = gp.tileSize;
+        text = "    C: CHARACTER PAGE";
+        x = gp.tileSize*2;
         y = gp.tileSize+150;
+        g2.drawString(text,x,y);
+
+        text = "    P: PAUSE";
+        x = gp.tileSize*2;
+        y = gp.tileSize+180;
+        g2.drawString(text,x,y);
+
+        text = "       Enter: SELECT/ACTION";
+        x = gp.tileSize;
+        y = gp.tileSize+210;
         g2.drawString(text,x,y);
 
 
@@ -491,29 +635,13 @@ public class UI {
         g2.drawString(text,x,y);
         if(commandNum == 0){
             g2.drawString(">",x-gp.tileSize*1,y);
-        }
-        
-        text = "LOAD GAME";
-        x = getXforCenteredText(text);
-        y += gp.tileSize*2;
-        g2.drawString(text,x,y);
-        if(commandNum == 1){
-            g2.drawString(">",x-gp.tileSize*1,y);
-        }
-
-        text = "TUTORIAL";
-        x = getXforCenteredText(text);
-        y += gp.tileSize*2;
-        g2.drawString(text,x,y);
-        if(commandNum == 2){
-            g2.drawString(">",x-gp.tileSize*1,y);
-        }
+        }      
 
         text = "QUIT";
         x = getXforCenteredText(text);
         y += gp.tileSize*2;
         g2.drawString(text,x,y);
-        if(commandNum == 3){
+        if(commandNum == 1){
             g2.drawString(">",x-gp.tileSize*1,y);
         }
     }
@@ -521,6 +649,12 @@ public class UI {
     public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2-length/2;
+        return x;
+    }
+    
+    public int getXforAlignToRightText(String text,int tailX) {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = tailX - length;
         return x;
     }
 }
