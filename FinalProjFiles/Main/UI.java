@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import Entity.Entity;
 import object.OBJ_Heart;
-import object.OBJ_Key;
 
 public class UI {
     
@@ -67,8 +66,6 @@ public class UI {
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);//Name of font, type(bold or plain), size of the font
         
-        OBJ_Key key = new OBJ_Key(gp);
-        keyImage = key.image;
         lastFrameTime = System.nanoTime();
         
     }
@@ -236,7 +233,53 @@ public class UI {
         if(gp.gameState == gp.gameOverState){
             drawGameOverScreen();
         }
+
+        if(gp.gameState == gp.winState){
+            drawWinScreen();
+        }
         
+    }
+
+    public void drawWinScreen(){
+        g2.setColor(new Color(0,0,0,150));
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+        int x ;
+        int y ;
+        String text;
+        g2.setFont(earthbound.deriveFont(Font.BOLD,110F));
+
+        text = "Victory!";
+        g2.setColor(Color.black);
+        //Shadow Text
+        x = getXforCenteredText(text);
+        y = gp.tileSize*4;
+        g2.drawString(text,x,y);
+        //Main text
+        g2.setColor(Color.WHITE);
+        g2.drawString(text,x-4,y-4);
+
+         //Retry
+         g2.setFont(earthbound.deriveFont(Font.BOLD,50F));
+         text = "Retry";
+         x = getXforCenteredText(text);
+         y += gp.tileSize*4;
+         g2.drawString(text,x,y);
+         if(commandNum == 0){
+             g2.drawString(">",x-40,y);
+         }
+
+         //Back to Main menu
+         text = "Quit";
+         x = getXforCenteredText(text);
+         y+=gp.tileSize*2;
+         g2.drawString(text,x,y);
+         if(commandNum == 1){
+             g2.drawString(">",x-40,y);
+         }
+
+
+
     }
 
     public void drawGameOverScreen(){
@@ -516,43 +559,48 @@ public class UI {
 
             text = "CONTROLS:";
             x = gp.tileSize*2;
-            y = gp.tileSize;
+            y = gp.tileSize*2;
             g2.drawString(text,x,y);
     
             text = "    W: UP";
             x = gp.tileSize*2;
-            y = gp.tileSize+30;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
     
             text = "    A: LEFT";
             x = gp.tileSize*2;
-            y = gp.tileSize+60;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
             text = "    S: DOWN";
             x = gp.tileSize*2;
-            y = gp.tileSize+90;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
             text = "    D: RIGHT";
             x = gp.tileSize*2;
-            y = gp.tileSize+120;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
             text = "    C: CHARACTER PAGE";
             x = gp.tileSize*2;
-            y = gp.tileSize+150;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
             text = "    P: PAUSE";
             x = gp.tileSize*2;
-            y = gp.tileSize+180;
+            y += gp.tileSize+10;
+            g2.drawString(text,x,y);
+
+            text = "   APOSTROPHE: ATTACK";
+            x = gp.tileSize*2;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
     
             text = "       Enter: SELECT/ACTION";
             x = 15;
-            y = gp.tileSize+210;
+            y += gp.tileSize+10;
             g2.drawString(text,x,y);
 
         
@@ -618,10 +666,15 @@ public class UI {
         x = gp.tileSize*2;
         y = gp.tileSize+180;
         g2.drawString(text,x,y);
+        
+        text = "   APOSTROPHE: ATTACK";
+        x = gp.tileSize*2;
+        y = gp.tileSize+210;
+        g2.drawString(text,x,y);
 
         text = "       Enter: SELECT/ACTION";
         x = gp.tileSize;
-        y = gp.tileSize+210;
+        y = gp.tileSize+240;
         g2.drawString(text,x,y);
 
 

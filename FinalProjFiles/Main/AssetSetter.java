@@ -5,10 +5,6 @@ import Entity.NPC_TutOldMan;
 import Monster.MON_chuchu;
 import Monster.MON_darkknight;
 import Monster.MON_orc;
-import object.OBJ_Boots;
-import object.OBJ_Chest;
-import object.OBJ_Door;
-import object.OBJ_Key;
 
 
 
@@ -120,6 +116,12 @@ public class AssetSetter {
 
 
     }
+    public void setKnight(){
+        gp.monster[3][0] = new MON_darkknight(gp);
+        gp.monster[3][0].worldX = gp.tileSize*142;//col
+        gp.monster[3][0].worldY = gp.tileSize*92;//row
+    }
+
     public void setMonster(){
         int mapNum = 0;
         int i = 0;
@@ -128,10 +130,7 @@ public class AssetSetter {
         mapNum = 2;
 
         mapNum = 3;
-        gp.monster[3][0] = new MON_darkknight(gp);
-        gp.monster[3][0].worldX = gp.tileSize*142;//col
-        gp.monster[3][0].worldY = gp.tileSize*92;//row
-        i++;
+       
 
         gp.monster[3][1] = new MON_chuchu(gp);
         gp.monster[3][1].worldX = gp.tileSize*120;//col
@@ -169,7 +168,7 @@ public class AssetSetter {
         i++;
 
         gp.monster[3][8] = new MON_chuchu(gp);
-        gp.monster[3][8].worldX = gp.tileSize*145;//col
+        gp.monster[3][8].worldX = gp.tileSize*164;//col
         gp.monster[3][8].worldY = gp.tileSize*96;//row
 
         gp.monster[3][9] = new MON_chuchu(gp);
@@ -223,48 +222,49 @@ public class AssetSetter {
         gp.monster2[3][9] = new MON_orc(gp);
         gp.monster2[3][9].worldX = gp.tileSize*133;//col
         gp.monster2[3][9].worldY = gp.tileSize*105;//row
-
     }
+
+
     public void setMonster3(){
-        gp.monster2[3][0] = new MON_chuchu(gp);
-        gp.monster2[3][0].worldX = gp.tileSize*137;//col
-        gp.monster2[3][0].worldY = gp.tileSize*157;//row
+        gp.monster3[3][0] = new MON_chuchu(gp);
+        gp.monster3[3][0].worldX = gp.tileSize*137;//col
+        gp.monster3[3][0].worldY = gp.tileSize*157;//row
 
-        gp.monster2[3][1] = new MON_orc(gp);
-        gp.monster2[3][1].worldX = gp.tileSize*154;//col
-        gp.monster2[3][1].worldY = gp.tileSize*164;//row
+        gp.monster3[3][1] = new MON_orc(gp);
+        gp.monster3[3][1].worldX = gp.tileSize*154;//col
+        gp.monster3[3][1].worldY = gp.tileSize*164;//row
 
-        gp.monster2[3][2] = new MON_orc(gp);
-        gp.monster2[3][2].worldX = gp.tileSize*129;//col
-        gp.monster2[3][2].worldY = gp.tileSize*182;//row
+        gp.monster3[3][2] = new MON_orc(gp);
+        gp.monster3[3][2].worldX = gp.tileSize*129;//col
+        gp.monster3[3][2].worldY = gp.tileSize*182;//row
 
-        gp.monster2[3][3] = new MON_chuchu(gp);
-        gp.monster2[3][3].worldX = gp.tileSize*205;//col
-        gp.monster2[3][3].worldY = gp.tileSize*169;//row
+        gp.monster3[3][3] = new MON_chuchu(gp);
+        gp.monster3[3][3].worldX = gp.tileSize*205;//col
+        gp.monster3[3][3].worldY = gp.tileSize*169;//row
 
-        gp.monster2[3][4] = new MON_chuchu(gp);
-        gp.monster2[3][4].worldX = gp.tileSize*204;//col
-        gp.monster2[3][4].worldY = gp.tileSize*195;//row
+        gp.monster3[3][4] = new MON_chuchu(gp);
+        gp.monster3[3][4].worldX = gp.tileSize*204;//col
+        gp.monster3[3][4].worldY = gp.tileSize*195;//row
 
-        gp.monster2[3][5] = new MON_chuchu(gp);
-        gp.monster2[3][5].worldX = gp.tileSize*208;//col
-        gp.monster2[3][5].worldY = gp.tileSize*183;//row
+        gp.monster3[3][5] = new MON_chuchu(gp);
+        gp.monster3[3][5].worldX = gp.tileSize*208;//col
+        gp.monster3[3][5].worldY = gp.tileSize*183;//row
 
-        gp.monster2[3][6] = new MON_orc(gp);
-        gp.monster2[3][6].worldX = gp.tileSize*85;//col
-        gp.monster2[3][6].worldY = gp.tileSize*146;//row
+        gp.monster3[3][6] = new MON_orc(gp);
+        gp.monster3[3][6].worldX = gp.tileSize*85;//col
+        gp.monster3[3][6].worldY = gp.tileSize*146;//row
 
-        gp.monster2[3][7] = new MON_orc(gp);
-        gp.monster2[3][7].worldX = gp.tileSize*85;//col
-        gp.monster2[3][7].worldY = gp.tileSize*146;//row
+        gp.monster3[3][7] = new MON_orc(gp);
+        gp.monster3[3][7].worldX = gp.tileSize*77;//col
+        gp.monster3[3][7].worldY = gp.tileSize*142;//row
 
-        gp.monster2[3][8] = new MON_orc(gp);
-        gp.monster2[3][8].worldX = gp.tileSize*140;//col
-        gp.monster2[3][8].worldY = gp.tileSize*116;//row
+        gp.monster3[3][8] = new MON_orc(gp);
+        gp.monster3[3][8].worldX = gp.tileSize*140;//col
+        gp.monster3[3][8].worldY = gp.tileSize*116;//row
 
-        gp.monster2[3][9] = new MON_orc(gp);
-        gp.monster2[3][9].worldX = gp.tileSize*204;//col
-        gp.monster2[3][9].worldY = gp.tileSize*187;//row
+        gp.monster3[3][9] = new MON_orc(gp);
+        gp.monster3[3][9].worldX = gp.tileSize*204;//col
+        gp.monster3[3][9].worldY = gp.tileSize*187;//row
 
         
 

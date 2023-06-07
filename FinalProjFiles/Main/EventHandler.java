@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Rectangle;
+import java.util.Random;
 
 import Entity.Entity;
 
@@ -50,9 +51,18 @@ public class EventHandler {
     public void setDialogue(){
 
             eventMaster.dialogues[0][0] = "You fall into a pit!";
+
             eventMaster.dialogues[1][0] = "The water is nice and warm...";
             eventMaster.dialogues[1][1] = "You recovered all your HP!";
             eventMaster.dialogues[1][1] = "All monsters have respawned!";
+
+            eventMaster.dialogues[2][0] = "Too salty...";
+
+            eventMaster.dialogues[3][0] = "I sense your pressence....";
+            eventMaster.dialogues[3][1] = "You shall regret challenging me boy.";
+           
+
+
             
 
     }
@@ -65,15 +75,6 @@ public class EventHandler {
             canTouchEvent = true;
         }
         if(canTouchEvent){
-            /*if(hit(0,23,21,"up") == true){
-                System.out.println("HIT");
-                damagePit(gp.playDialogueState);
-            }*/
-            /*if(hit(0,21,7,"up") == true){healingPool(gp.playDialogueState);}
-            if(hit(0,22,7,"up") == true){healingPool(gp.playDialogueState);}
-            if(hit(0,23,7,"up") == true){healingPool(gp.playDialogueState);}
-            if(hit(0,24,7,"up") == true){healingPool(gp.playDialogueState);}
-            if(hit(0,25,7,"up") == true){healingPool(gp.playDialogueState);}*/
             if(hit(3,91,170,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,92,170,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,90,171,"down") == true){healingPool(gp.playDialogueState);}
@@ -86,6 +87,26 @@ public class EventHandler {
             if(hit(3,89,172,"right") == true){healingPool(gp.playDialogueState);}
             if(hit(3,89,173,"right") == true){healingPool(gp.playDialogueState);}
 
+            if(hit(3,167,93,"right") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,167,94,"right") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,167,95,"right") == true){healingPool(gp.playDialogueState);}
+
+            if(hit(3,168,92,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,169,92,"down") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,179,93,"down") == true){healingPool(gp.playDialogueState);}
+
+            if(hit(3,171,93,"left") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,171,94,"left") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,171,95,"left") == true){healingPool(gp.playDialogueState);}
+
+            if(hit(3,168,96,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,169,96,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,170,96,"up") == true){healingPool(gp.playDialogueState);}
+
+
+
+
+
 
             if(hit(3,137,190,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,138,190,"down") == true){healingPool(gp.playDialogueState);}
@@ -94,8 +115,27 @@ public class EventHandler {
             if(hit(3,136,191,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,143,192,"down") == true){healingPool(gp.playDialogueState);}
 
+            if(hit(3,138,171,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,138,171,"right") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,139,172,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,140,172,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,141,172,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,142,172,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,143,172,"up") == true){healingPool(gp.playDialogueState);}
+            if(hit(3,144,172,"up") == true){healingPool(gp.playDialogueState);}
 
 
+
+
+            //Beach
+            for(int i = 154; i<214 ; i++){
+                if(hit(3,216,i,"right") == true){beach(gp.playDialogueState);}
+             }
+
+             if(hit(3,135,101,"up") == true){bossFight(gp.playDialogueState);}
+             if(hit(3,136,101,"up") == true){bossFight(gp.playDialogueState);}
+             if(hit(3,137,101,"up") == true){bossFight(gp.playDialogueState);}
+             if(hit(3,138,101,"up") == true){bossFight(gp.playDialogueState);}
 
         }
 
@@ -154,6 +194,40 @@ public class EventHandler {
             gp.aSetter.setMonster();
             gp.aSetter.setMonster2();
             gp.aSetter.setMonster3();
+
+        }
+    }
+    public void bossFight(int gameState){
+             
+            gp.gameState = gameState;
+            gp.player.attackCanceled= true;
+            gp.stopMusic();
+            eventMaster.startDialogue(eventMaster,3);
+            Random random = new Random();
+
+            int randomNumber = random.nextInt(2) + 1;
+
+            if(randomNumber == 1){
+                gp.playMusic(15);
+            }
+            if(randomNumber ==2){
+                gp.playMusic(16);
+            }
+
+            canTouchEvent = false;
+
+            
+
+        
+    }
+
+    public void beach(int gameState){
+        if(gp.keyH.enterPressed == true){
+            
+            gp.gameState = gameState;
+            gp.player.attackCanceled= true;
+            eventMaster.startDialogue(eventMaster,2);
+            
 
         }
     }

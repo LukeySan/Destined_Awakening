@@ -9,7 +9,7 @@ import Entity.Player;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, quotePressed;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -60,6 +60,9 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.gameOverState){
             gameOverState(code);
         }
+        else if (gp.gameState == gp.winState){
+            winState(code);
+        }
         
 
         //DEBUG
@@ -77,6 +80,41 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    public void winState(int  code){
+        if(code== KeyEvent.VK_W){
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum<0){
+                gp.ui.commandNum = 1;
+            }
+            gp.playSE(6);
+        }
+        if(code== KeyEvent.VK_S){
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum>1){
+                gp.ui.commandNum = 0;
+            }
+            gp.playSE(6);
+        }
+        if(code == KeyEvent.VK_ENTER){
+            if(gp.ui.commandNum == 0){
+                gp.stopMusic();
+                gp.playSE(7);
+
+                gp.gameState= gp.playState;
+                gp.retry();
+                gp.playMusic(0);
+            }
+            else if(gp.ui.commandNum == 1){
+                gp.stopMusic();
+                gp.playSE(7);
+
+                gp.gameState =  gp.titleState;
+                gp.restart();
+                gp.playMusic(5);
+            }
+        }
+    }
+
     public void gameOverState(int code){
         if(code== KeyEvent.VK_W){
             gp.ui.commandNum--;
@@ -87,7 +125,7 @@ public class KeyHandler implements KeyListener {
         }
         if(code== KeyEvent.VK_S){
             gp.ui.commandNum++;
-            if(gp.ui.commandNum<1){
+            if(gp.ui.commandNum>1){
                 gp.ui.commandNum = 0;
             }
             gp.playSE(6);
@@ -132,6 +170,7 @@ public class KeyHandler implements KeyListener {
                 gp.aSetter.setMonster();
                 gp.aSetter.setMonster2();
                 gp.aSetter.setMonster3();
+                gp.aSetter.setKnight();
                 gp.aSetter.setNPC();
                 gp.player.setDefaultValues();
                 gp.stopMusic();
@@ -193,6 +232,9 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ENTER){
             enterPressed = true;
+        }
+        if(code == KeyEvent.VK_QUOTE){
+            quotePressed = true;
         }
         if(code == KeyEvent.VK_G){
             if(godModeOn == false){

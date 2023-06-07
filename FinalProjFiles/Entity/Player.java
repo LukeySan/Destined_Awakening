@@ -81,7 +81,7 @@ public class Player extends Entity{
 
         //Player Status
         level = 1;
-        strength = 1; //Amount of damage done to monsters
+        strength = 2; //Amount of damage done to monsters
         exp = 0;
         nextLevelExp = 5;
         maxLife = 6;
@@ -178,7 +178,7 @@ public class Player extends Entity{
                 gp.player.damageMonster2(monster2Index);
 
                 int monster3Index = gp.cChecker.checkEntity(this, gp.monster3);
-                gp.player.damageMonster2(monster3Index);
+                gp.player.damageMonster3(monster3Index);
             }
     
             // After checking collision, restore the original data only if a collision occurred
@@ -217,7 +217,7 @@ public class Player extends Entity{
         }
 
         else if(keyH.upPressed == true || keyH.downPressed == true || 
-            keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true){       
+            keyH.leftPressed == true || keyH.rightPressed == true || keyH.quotePressed){       
                 if(keyH.upPressed == true){
                     direction = "up";
                 }
@@ -249,10 +249,10 @@ public class Player extends Entity{
 
                 //check monster2 collision
                 int monsterIndex2 = gp.cChecker.checkEntity(this,gp.monster2);
-                contactMonster(monsterIndex2);
+                contactMonster2(monsterIndex2);
 
                 int monsterIndex3 = gp.cChecker.checkEntity(this,gp.monster3);
-                contactMonster(monsterIndex3);
+                contactMonster3(monsterIndex3);
 
                 //check event collision
                 gp.eHandler.checkEvent();
@@ -260,7 +260,7 @@ public class Player extends Entity{
 
 
                 //IF COLLISION IS FALSE, PLAYER CAN MOVE
-                if(collisionOn == false && keyH.enterPressed == false){
+                if(collisionOn == false && keyH.enterPressed == false && keyH.quotePressed == false){
                     switch(direction){
                         case "up":
                             worldY -= speed;
@@ -278,7 +278,7 @@ public class Player extends Entity{
                     }
                 }
 
-                if(keyH.enterPressed == true && attackCanceled == false){
+                if(keyH.quotePressed == true && attackCanceled == false){
                     gp.playSE(11);
                     attacking = true;
                     spriteCounter = 0;
@@ -287,6 +287,7 @@ public class Player extends Entity{
                 attackCanceled = false;
 
                 keyH.enterPressed = false;
+                keyH.quotePressed = false;
 
 
                 spriteCounter++;
@@ -393,6 +394,8 @@ public class Player extends Entity{
                     gp.ui.addMessage("EXP +" + gp.monster3[gp.currentMap][i].exp + "!");
                     exp+= gp.monster3[gp.currentMap][i].exp;
                     checkLevelUp();
+
+                    
                 }
             }
                       
@@ -431,6 +434,11 @@ public class Player extends Entity{
                     gp.ui.addMessage("EXP +" + gp.monster[gp.currentMap][i].exp + "!");
                     exp+= gp.monster[gp.currentMap][i].exp;
                     checkLevelUp();
+                    if(gp.monster[gp.currentMap][i].equals(gp.monster[3][0])){
+                        gp.gameState = gp.winState;
+                        gp.stopMusic();
+                        gp.playMusic(4);
+                    }
                 }
             }
                       
@@ -447,8 +455,8 @@ public class Player extends Entity{
         if (exp >= nextLevelExp){
             level++;
             nextLevelExp = nextLevelExp*2;
-            maxLife += 2;
-            strength++;
+            maxLife += 4;
+            strength+=2;
 
             gp.playSE(13);
             gp.ui.addMessage("Level up! You are now Level: "+level);

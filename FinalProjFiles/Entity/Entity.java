@@ -101,7 +101,7 @@ public class Entity {
         }
     }
     public int  getCenterX(){
-        int centerX = worldX+left1.getWidth()/2;
+        int centerX = worldX+up1.getWidth()/2;
         return centerX;
     }
     public int getCenterY(){
@@ -333,7 +333,7 @@ public class Entity {
                     direction = "up";
                 }
                 else{
-                    direction = "right";
+                    direction = "down";
                 }
             }
             actionLockCounter = 0;

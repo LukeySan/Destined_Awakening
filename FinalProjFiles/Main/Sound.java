@@ -29,6 +29,9 @@ public class Sound {
         soundURL[12] = getClass().getResource("/res/sound/healingpool.wav");
         soundURL[13] = getClass().getResource("/res/sound/levelup.wav");
         soundURL[14] = getClass().getResource("/res/sound/gameover.wav");
+        soundURL[15] = getClass().getResource("/res/sound/bossBattleZZ.wav");
+        soundURL[16] = getClass().getResource("/res/sound/earthboundBoss.wav");
+
 
 
 
@@ -62,6 +65,14 @@ public class Sound {
                 gainControl.setValue(-15.0f);
             }
             else if (i == 8){
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-15.0f);
+            }
+            else if (i == 15){
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-15.0f);
+            }
+            else if (i == 16){
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-15.0f);
             }

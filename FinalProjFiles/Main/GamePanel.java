@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
      public final int tutorialDialogueState = 6;
      public final int characterState = 7;
      public final int gameOverState = 8;
+     public final int winState = 9;
 
 
      //FOR FULL SCREEN
@@ -79,11 +80,11 @@ public class GamePanel extends JPanel implements Runnable{
      public Player player = new Player(this,keyH);
      public Entity obj[][] = new Entity[maxMap][20];
      public Entity npc[][] = new Entity[maxMap][20];
-     public Entity monster[][] = new Entity[maxMap][20];
-     public Entity monster2[][] = new Entity[maxMap][20];
-     public Entity monster3[][] = new Entity[maxMap][20];
+     public Entity monster[][] = new Entity[maxMap][30];
+     public Entity monster2[][] = new Entity[maxMap][30];
+     public Entity monster3[][] = new Entity[maxMap][30];
 
-     ArrayList<Entity> entityList = new ArrayList<>();
+     ArrayList<Entity> entityList = new ArrayList<>(100);
 
 
     public GamePanel(){
@@ -102,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setMonster();
         aSetter.setMonster2();
         aSetter.setMonster3();
+        aSetter.setKnight();
 
         aSetter.setNPC();
         playMusic(5);
@@ -133,6 +135,8 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setMonster();
         aSetter.setMonster2();
         aSetter.setMonster3();
+        aSetter.setKnight();
+
 
     }
 
@@ -144,6 +148,7 @@ public class GamePanel extends JPanel implements Runnable{
         aSetter.setMonster();
         aSetter.setMonster2();
         aSetter.setMonster3();
+        aSetter.setKnight();
         aSetter.setNPC();
 
     }
@@ -318,7 +323,8 @@ public class GamePanel extends JPanel implements Runnable{
     
     
     //OTHERS
-    if (gameState == playState || gameState == playPauseState || gameState == playDialogueState || gameState == characterState || gameState == gameOverState){
+    if (gameState == playState || gameState == playPauseState || gameState == playDialogueState 
+            || gameState == characterState || gameState == gameOverState || gameState == winState){
             
             currentMap = 3;
             

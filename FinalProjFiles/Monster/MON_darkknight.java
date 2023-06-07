@@ -15,10 +15,10 @@ public class MON_darkknight extends Entity{
         type = 2;
         direction = "down";
         name = "monName";
-        speed = 4;
+        speed = 3;
         maxLife = 50;
         life = maxLife;
-        strength = 9;
+        strength = 7;
         exp = 300;
 
         int size  = gp.tileSize*5;
@@ -67,17 +67,6 @@ public class MON_darkknight extends Entity{
    
 
     public void setAction(){
-        int xDistance = Math.abs(worldX - gp.player.worldX);
-        int yDistance = Math.abs(worldY - gp.player.worldY);
-        int tileDistance = (xDistance + yDistance)/gp.tileSize;
-
-        if(onPath == false && tileDistance <5){
-            int i = new Random().nextInt(100)+1;
-            if(i>50){
-                onPath = true;
-            }
-        }
-       
 
         if(getTileDistance(gp.player)<10){
             moveTowardPLayer(15);
@@ -107,10 +96,11 @@ public class MON_darkknight extends Entity{
             actionLockCounter = 0;
             }
 
-            if(this.attacking == false){
-                checkAttackOrNot(30, gp.tileSize*10, gp.tileSize*10);
-            }
-
+        
+        }
+        if(attacking == false){ 
+            checkAttackOrNot(60, gp.tileSize*8,gp.tileSize*2);
+           
         }
     }
     public void damageReaction(){
