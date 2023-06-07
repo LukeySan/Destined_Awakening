@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import Main.GamePanel;
 import Main.KeyHandler;
 import Main.UtilityTool;
-import object.OBJ_Chest_Opened;
 
 public class Player extends Entity{
     GamePanel gp;
@@ -91,10 +90,6 @@ public class Player extends Entity{
     public int getStrength(){
         return strength;
     }
-
-    
-
-
     public void getPlayerImage(){
         up1 = setup("/res/player/boy_up_1",gp.tileSize,gp.tileSize);
         up2 = setup("/res/player/boy_up_2",gp.tileSize,gp.tileSize);
@@ -236,8 +231,7 @@ public class Player extends Entity{
                 gp.cChecker.checkTile(this);
 
                 //CHECK OBJECT COLLISION
-                int objIndex = gp.cChecker.checkObject(this,true);
-                pickUpObject(objIndex);
+              
 
                 //check NPC collision
                 int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -467,57 +461,7 @@ public class Player extends Entity{
 
     
 
-    public void pickUpObject(int i){
-        if(i!= 999){
-            String objectName = gp.obj[gp.currentMap][i].name;
-
-            switch(objectName){
-            case "Key":
-             gp.playSE(1);
-            hasKey++;
-            gp.obj[gp.currentMap][i] =null;
-            //gp.ui.showMessage("You got a key!");
-                break;
-                
-            case"Door":
-                if(hasKey> 0){
-                    gp.playSE(3);
-                    gp.obj[gp.currentMap][i] = null;
-                    hasKey--;
-                   // gp.ui.showMessage("You opened the door!");
-                }
-                else{
-                    //gp.ui.showMessage("You need a key!");
-                }
-                System.out.println("Keys:"+hasKey);
-                break;
-
-            case "Boots":
-                gp.playSE(2);
-                speed+=4;
-                gp.obj[gp.currentMap][i] = null;
-                //gp.ui.showMessage("Speed up!");
-
-                break;
-
-            case "Chest":;
-                gp.ui.gameFinished = true;
-                gp.stopMusic();
-                gp.playSE(4);
-                int tempX = gp.obj[gp.currentMap][i].worldX;
-                int tempY = gp.obj[gp.currentMap][i].worldY;
-                gp.obj[gp.currentMap][i] = new OBJ_Chest_Opened(gp); 
-                gp.obj[gp.currentMap][i].worldX = tempX;
-                gp.obj[gp.currentMap][i].worldY = tempY;
-                //gp.ui.showMessage("Chest opened");
-
-                break;
-           
-
-            }
-        }
-
-    }
+    
 
     public void draw(Graphics2D g2){
         //g2.setColor(Color.white);

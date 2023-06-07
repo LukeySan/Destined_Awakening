@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import Main.KeyHandler;
 import ai.PathFinder;
-import object.SuperObject;
 import tile.TileManager;
 import Entity.Entity;
 import Entity.Player;

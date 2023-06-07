@@ -21,7 +21,7 @@ public class PathFinder {
     }
     
     public void instantiateNodes(){
-
+        // Create nodes for each cell in the grid
         node = new Node[gp.maxWorldCol][gp.maxWorldRow];
 
         int col = 0;
@@ -43,8 +43,7 @@ public class PathFinder {
         int col = 0 ;
         int row = 0;
         while(col <gp.maxWorldCol && row<gp.maxWorldRow){
-
-            //Reset open, checked and solid state
+            // Reset open, checked, and solid state of each node
             node[col][row].open = false;
             node[col][row].checked = false;
             node[col][row].solid = false;
@@ -78,7 +77,7 @@ public class PathFinder {
         while(col < gp.maxWorldCol && row<gp.maxWorldRow){
             //Set  Solid  Node
             //Check Tiles
-
+            // Set solid node if the corresponding tile is solid
             int tileNum = gp.tileM.mapTileNum[gp.currentMap][col][row];
             if(gp.tileM.tile[tileNum].collision == true){
                 node[col][row].solid = true;
@@ -169,6 +168,7 @@ public class PathFinder {
     }
     public void openNode (Node node){
         if(node.open == false && node.checked == false && node.solid == false){
+            // Add the node to the open list and set its parent to the current node
             node.open = true;
             node.parent = currentNode;
             openList.add(node);
@@ -178,6 +178,7 @@ public class PathFinder {
         Node current= goalNode;
 
         while (current!= startNode){
+        // Add each node to the path list by tracing back from goal node to start node
             pathList.add(0,current);
             current = current.parent;
         }

@@ -16,7 +16,7 @@ public class MON_darkknight extends Entity{
         direction = "down";
         name = "monName";
         speed = 3;
-        maxLife = 50;
+        maxLife = 65;
         life = maxLife;
         strength = 7;
         exp = 300;

@@ -13,11 +13,10 @@ public class main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Game!");
-        //window.setUndecorated(true);
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
-        
+
         window.pack();
 
         window.setLocationRelativeTo(null);

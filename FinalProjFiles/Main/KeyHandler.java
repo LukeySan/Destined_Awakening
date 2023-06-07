@@ -236,6 +236,8 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_QUOTE){
             quotePressed = true;
         }
+        //GOD MODE
+        /* 
         if(code == KeyEvent.VK_G){
             if(godModeOn == false){
                 godModeOn = true;
@@ -243,7 +245,7 @@ public class KeyHandler implements KeyListener {
             else if(godModeOn == true){
                 godModeOn = false;
             }
-        }
+        }*/
     }
     public void tutorialState(int code){
         if(code == KeyEvent.VK_W && gp.gameState == gp.tutorialState){

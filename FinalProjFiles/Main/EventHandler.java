@@ -52,7 +52,7 @@ public class EventHandler {
 
             eventMaster.dialogues[0][0] = "You fall into a pit!";
 
-            eventMaster.dialogues[1][0] = "The water is nice and warm...";
+            eventMaster.dialogues[1][0] = "The water is nice and warm...somehow......";
             eventMaster.dialogues[1][1] = "You recovered all your HP!";
             eventMaster.dialogues[1][1] = "All monsters have respawned!";
 
