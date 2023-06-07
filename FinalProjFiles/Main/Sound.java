@@ -44,6 +44,7 @@ public class Sound {
             clip = AudioSystem.getClip();
             clip.open(ais);
             
+            //Lowers Volume of sound
             if (i == 0 ) {
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-25.0f);

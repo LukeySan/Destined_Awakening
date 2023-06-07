@@ -74,7 +74,7 @@ public class EventHandler {
         if(distance >gp.tileSize){
             canTouchEvent = true;
         }
-        if(canTouchEvent){
+        if(canTouchEvent){ // all healing pool markers
             if(hit(3,91,170,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,92,170,"down") == true){healingPool(gp.playDialogueState);}
             if(hit(3,90,171,"down") == true){healingPool(gp.playDialogueState);}
@@ -127,11 +127,9 @@ public class EventHandler {
 
 
 
-            //Beach
+            //Beach water event loop
             for(int i = 154; i<214 ; i++){
-                if(hit(3,216,i,"right") == true){beach(gp.playDialogueState);}
-             }
-
+                if(hit(3,216,i,"right") == true){beach(gp.playDialogueState);} }
              if(hit(3,135,101,"up") == true){bossFight(gp.playDialogueState);}
              if(hit(3,136,101,"up") == true){bossFight(gp.playDialogueState);}
              if(hit(3,137,101,"up") == true){bossFight(gp.playDialogueState);}

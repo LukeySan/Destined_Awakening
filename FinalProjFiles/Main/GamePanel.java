@@ -112,7 +112,6 @@ public class GamePanel extends JPanel implements Runnable{
        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB); //Buffered image as large as the game window
         g2 = (Graphics2D)tempScreen.getGraphics();
 
-        //setFullScreen();
     }
 
     //UNUSED
@@ -179,10 +178,8 @@ public class GamePanel extends JPanel implements Runnable{
 
             if(delta>= 1){
                 update();
-                repaint(); //For when running on mac
-                paintComponent(g2); //For when running on mac
-                //drawToTempScreen();//draw everything to the buffered image
-                //drawToScreen();//draw the buffered image to the screen
+                repaint(); 
+                paintComponent(g2); 
                 delta--;
                 drawCount++;
             }
@@ -247,7 +244,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         } 
     }
- public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g){
         
 
         super.paintComponent(g);
@@ -263,65 +260,6 @@ public class GamePanel extends JPanel implements Runnable{
     if(gameState == titleState){
         ui.draw(g2);  
     }
-     if(gameState == tutorialState || gameState == tutorialPauseState|| gameState == tutorialDialogueState){
-
-        currentMap = 2;
-        tileM.draw(g2);
-        //adds entities to list
-        entityList.add(player);
-
-        for(int i = 0; i<npc.length; i++){
-            if(npc[currentMap][i] != null){
-                entityList.add(npc[currentMap][i]);
-            }
-        }
-
-        for (int i = 0; i<obj.length;i++){
-            if(obj[currentMap][i] != null){
-                entityList.add(obj[currentMap][i]);
-            }
-        }
-        for (int i = 0; i<monster.length;i++){
-            if(monster[currentMap][i] != null){
-                entityList.add(monster[currentMap][i]);
-            }
-        }
-    //sort
-        /*for(int i = 0;i<entityList.size(); i++){
-            if(entityList.get(i).equals(null)){
-                System.out.println("null object at element" + currentMap + i);
-            }
-        }*/
-
-    /*Collections.sort(entityList, new Comparator<Entity>(){
-        public int compare (Entity e1, Entity e2){
-            int result = Integer.compare(e1.worldY, e2.worldY);
-            return result;
-        }
-    });*/
-
-    //draw entities
-    for (int i = 0; i<entityList.size();i++){
-        entityList.get(i).draw(g2);
-
-    }
-    for (int i = 0; i<entityList.size();i++){
-        entityList.remove(i);
-        
-    }
-
-        
-
-        ui.draw(g2);
-
-        if (g2 != null) {
-            g2.dispose();
-        }
-
-
-    }
-    
-    
     //OTHERS
     if (gameState == playState || gameState == playPauseState || gameState == playDialogueState 
             || gameState == characterState || gameState == gameOverState || gameState == winState){
@@ -364,13 +302,8 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         
-        //sort
-        /*Collections.sort(entityList, new Comparator<Entity>(){
-            public int compare (Entity e1, Entity e2){
-                int result = Integer.compare(e1.worldY, e2.worldY);
-                return result;
-            }
-        });*/
+
+      
 
         //draw entities
         for (int i = 0; i<entityList.size();i++){

@@ -11,6 +11,7 @@ public class CollisionChecker {
 
     }
 
+    // Checks collision with tiles
     public void checkTile(Entity entity){
         int entityLeftWorldX = entity.worldX +entity.solidArea.x;
         int entityRightWorldX = entity.worldX +entity.solidArea.x + entity.solidArea.width;
@@ -26,6 +27,7 @@ public class CollisionChecker {
 
         switch(entity.direction){
             case"up":
+                // Check the tiles above the entity's position
                 entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
                 tileNum1= gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
                 tileNum2= gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
@@ -34,6 +36,7 @@ public class CollisionChecker {
                 }
                 break;
             case"down":
+            // Check the tiles below the entity's position
             entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
             tileNum1= gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
             tileNum2= gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
@@ -42,6 +45,7 @@ public class CollisionChecker {
             }
                 break;
             case"left":
+            // Check the tiles to the left of the entity's position
             entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
                 tileNum1= gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
                 tileNum2= gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
@@ -50,6 +54,7 @@ public class CollisionChecker {
                 }
                 break;
             case"right":
+            // Check the tiles to the right of the entity's position
             entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
                 tileNum1= gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
                 tileNum2= gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
@@ -61,6 +66,7 @@ public class CollisionChecker {
 
         }
     }
+     // Checks collision with objects
     public int checkObject(Entity entity, boolean player){
        
         int index = 999; 
