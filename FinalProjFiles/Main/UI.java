@@ -211,7 +211,7 @@ public class UI {
             drawPauseScreen(g2);
 
         }
-        if(gp.gameState == gp.playDialogueState){
+        else if(gp.gameState == gp.playDialogueState){
             drawPlayerLife();
 
             drawDialogueScreen();
@@ -219,28 +219,29 @@ public class UI {
         }
 
 
-        if(gp.gameState == gp.tutorialDialogueState){
+        else if(gp.gameState == gp.tutorialDialogueState){
             drawPlayerLife();
 
             drawDialogueScreen();
 
         }
 
-        if(gp.gameState == gp.characterState){
+        else if(gp.gameState == gp.characterState){
             drawCharacterScreen();
         }
 
-        if(gp.gameState == gp.gameOverState){
+        else if(gp.gameState == gp.gameOverState){
             drawGameOverScreen();
         }
 
-        if(gp.gameState == gp.winState){
+        else if(gp.gameState == gp.winState){
             drawWinScreen();
         }
         
     }
 
     public void drawWinScreen(){
+        try {
         g2.setColor(new Color(0,0,0,150));
         g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
 
@@ -277,6 +278,16 @@ public class UI {
          if(commandNum == 1){
              g2.drawString(">",x-40,y);
          }
+            // Add the code related to drawing player experience (EXP) here
+    
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
+        
 
 
 
@@ -293,8 +304,9 @@ public class UI {
             g2.setFont(earthbound.deriveFont(Font.BOLD,110F));
 
             text = "Game Over";
-
-            g2.setColor(Color.black);
+            try {
+                
+                g2.setColor(Color.black);
             //Shadow Text
             x = getXforCenteredText(text);
             y = gp.tileSize*4;
@@ -322,13 +334,53 @@ public class UI {
                 g2.drawString(">",x-40,y);
             }
 
+            } catch (Exception e) {
+                e.printStackTrace();  // Print the exception details for debugging purposes
+                // Optionally, you can log the exception using a logging framework
+        
+                // Handle the exception gracefully, for example:
+                // Show an error message to the player or log the issue
+            }
+
+           /*  g2.setColor(Color.black);
+            //Shadow Text
+            x = getXforCenteredText(text);
+            y = gp.tileSize*4;
+            g2.drawString(text,x,y);
+            //Main text
+            g2.setColor(Color.WHITE);
+            g2.drawString(text,x-4,y-4);
+
+            //Retry
+            g2.setFont(earthbound.deriveFont(Font.BOLD,50F));
+            text = "Retry";
+            x = getXforCenteredText(text);
+            y+= gp.tileSize*4;
+            g2.drawString(text,x,y);
+            if(commandNum == 0){
+                g2.drawString(">",x-40,y);
+            }
+
+            //Back to Main menu
+            text = "Quit";
+            x = getXforCenteredText(text);
+            y+=gp.tileSize*2;
+            g2.drawString(text,x,y);
+            if(commandNum == 1){
+                g2.drawString(">",x-40,y);
+            }*/
+
 
 
     }
     public void drawMessage(){
-        int messageX = gp.tileSize;
-        int messageY = gp.tileSize*4;
-        g2.setFont(earthbound.deriveFont(Font.BOLD,32F));
+
+        try {
+            // Existing code for drawing character screen
+            
+             int messageX = gp.tileSize;
+             int messageY = gp.tileSize*4;
+             g2.setFont(earthbound.deriveFont(Font.BOLD,32F));
 
         for(int i = 0; i<message.size(); i++ ){
 
@@ -347,16 +399,27 @@ public class UI {
                 message.remove(i);
                 messageCounter.remove(i);
             }
-
-
+            
+        } 
+    }
+        catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
         }
+       
+
+
+        
 
     }
 
     public void drawPlayerLife(){
-
-
-        int x = gp.tileSize/2;
+        try {
+    
+            int x = gp.tileSize/2;
         int y = gp.tileSize/2;
         int i = 0;
 
@@ -383,12 +446,22 @@ public class UI {
             i++;
             x+= gp.tileSize;
          }
+    
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
+
+        
 
     }
 
     public void drawDialogueScreen(){
-
-        //WINDOW
+        try {
+             //WINDOW
         int x = gp.tileSize*2;
         int y = gp.tileSize/2;
         int width = gp.screenWidth - (gp.tileSize*4);
@@ -438,9 +511,19 @@ public class UI {
             g2.drawString(line,x,y);
             y+= 40;
         }
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
+       
         
     }
     public void drawCharacterScreen(){
+        
+        try{
         //Create a fram
         final int frameX = gp.tileSize*2;
         final int frameY = gp.tileSize;
@@ -479,7 +562,7 @@ public class UI {
         g2.drawString(value,textX,textY);
         textY+= lineHeight;
 
-       value = String.valueOf(gp.player.exp);
+        value = String.valueOf(gp.player.exp);
         textX = getXforAlignToRightText(value,tailX);
         g2.drawString(value,textX,textY);
         textY+= lineHeight;
@@ -499,11 +582,44 @@ public class UI {
         g2.drawString(value,textX,textY);
         textY+= lineHeight;
 
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+       /*  value = String.valueOf(gp.player.level);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.exp);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.nextLevelExp);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.life) + "/" + String.valueOf(gp.player.maxLife) ;
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;
+
+        value = String.valueOf(gp.player.strength);
+        textX = getXforAlignToRightText(value,tailX);
+        g2.drawString(value,textX,textY);
+        textY+= lineHeight;*/
+
         
 
     }
     public void drawSubWindow(int x, int y, int width, int height){
-        Color c= new Color(0,0,0,200);
+        try {
+             Color c= new Color(0,0,0,200);
         g2.setColor(c);
         g2.fillRoundRect(x,y,width,height,35,35);
 
@@ -512,11 +628,30 @@ public class UI {
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
 
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
+       
 
     }
 
-
     public void drawPauseScreen(Graphics2D g2){
+        try {
+            // Existing code for drawing character screen
+    
+            // Add the code related to drawing player experience (EXP) here
+    
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
         g2.setFont(earthbound.deriveFont(Font.BOLD,130F));
         String text = "PAUSED";
         int x = getXforCenteredText(text);
@@ -610,8 +745,8 @@ public class UI {
     }
 
     public void drawTitleScreen(Graphics2D g2){
-        
-        //BLUE BACKGROUND
+        try {
+           //BLUE BACKGROUND
         g2.setColor(new Color(57,110,173));
         g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
         
@@ -697,6 +832,16 @@ public class UI {
         if(commandNum == 1){
             g2.drawString(">",x-gp.tileSize*1,y);
         }
+    
+        } catch (Exception e) {
+            e.printStackTrace();  // Print the exception details for debugging purposes
+            // Optionally, you can log the exception using a logging framework
+    
+            // Handle the exception gracefully, for example:
+            // Show an error message to the player or log the issue
+        }
+        
+        
     }
 
     public int getXforCenteredText(String text) {

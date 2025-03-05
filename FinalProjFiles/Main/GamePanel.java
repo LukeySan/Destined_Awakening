@@ -306,17 +306,33 @@ public class GamePanel extends JPanel implements Runnable{
 
         //draw entities
         for (int i = 0; i<entityList.size();i++){
+        try{
+            entityList.get(i).draw(g2); 
             
-                entityList.get(i).draw(g2);  
+        } 
+        catch(IndexOutOfBoundsException e){
+            System.out.println("CAUGHT YOU 1");
+        }
+        catch (NullPointerException e){
+            System.out.println("CAUGHT YOU 2");
+        }
+        
+        
+            
+            
         }
         entityList.clear();
 
         //UI
         ui.draw(g2);
 
+    
+
         if (g2 != null) {
             g2.dispose();
         }
+
+
     }
 
    

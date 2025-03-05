@@ -51,7 +51,7 @@ public class Sound {
             }
             else if (i == 4){
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-15.0f);
+                gainControl.setValue(-10.0f);
             }
             else if (i == 5){
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

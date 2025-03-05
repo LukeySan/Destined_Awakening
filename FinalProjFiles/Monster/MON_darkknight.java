@@ -22,8 +22,8 @@ public class MON_darkknight extends Entity{
         exp = 300;
 
         int size  = gp.tileSize*5;
-        solidArea.x = 48;
-        solidArea.y = 48;
+        solidArea.x = 68;
+        solidArea.y = 68;
         solidArea.width = size - 48*2;
         solidArea.height = size - 48;
         solidAreaDefaultX = solidArea.x;
