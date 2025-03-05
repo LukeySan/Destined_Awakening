@@ -17,3 +17,6 @@ Thumbs.db
 /bin/
 /build/
 /out/
+
+*.jar
+*.app
