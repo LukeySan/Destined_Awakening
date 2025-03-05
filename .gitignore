@@ -18,5 +18,9 @@ Thumbs.db
 /build/
 /out/
 
+# Large files exceeding GitHub limits
+Destined-Awakening.app/Contents/Resources/DestinedAwakening.jar
+releases/macos/Destined-Awakening.zip
 *.jar
+*.zip
 *.app
